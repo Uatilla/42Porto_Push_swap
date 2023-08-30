@@ -1,5 +1,5 @@
 CC		= gcc
-CFLAGS	= -Wall -Werror -Wextra
+CFLAGS	= -g -O0 -Wall -Werror -Wextra
 NAME	= push_swap
 
 SRC_PATH = src/

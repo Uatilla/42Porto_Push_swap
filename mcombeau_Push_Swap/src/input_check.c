@@ -6,7 +6,7 @@
 /*   By: uatilla <uatilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 13:27:24 by mcombeau          #+#    #+#             */
-/*   Updated: 2023/08/29 16:58:20 by uatilla          ###   ########.fr       */
+/*   Updated: 2023/08/29 22:07:01 by uatilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 *   Checks if the argument is a number. +1 1 and -1 are all valid numbers.
 *   Return: 1 if the argument is a number, 0 if not.
 */
-//GUIDE - 3.2) CHECK EACH CHAR OF THE ARGUMENT IF IT'S A NUMBER AND IF IT HAS A SIGN '-' OR '+'.
+//GUIDE - 3.2) CHECK EACH CHAR OF THE ARGUMENT IF IT HAS A SIGN '-' OR '+' AND  IF IT'S A NUMBER
 static int	arg_is_number(char *av)
 {
 	int	i;
