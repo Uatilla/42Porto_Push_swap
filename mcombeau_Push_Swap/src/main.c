@@ -53,7 +53,7 @@ int	main(int ac, char **av)
 	t_stack	*stack_b;
 	int		stack_size;
 
-	//GUIDE - 2) CHECK IF ANY ARGUMENT WAS PASSED (IF NONE AC <= 2) THEN RETURN 0.
+	//GUIDE - 2) CHECK IF ANY ARGUMENT WAS PASSED (IF NONE, AC <= 2) RETURN 0.
 	if (ac < 2)
 		return (0);
 	//GUIDE - 3) CHECK IF THE INPUT IS VALID (DECLARED IN INPUT_CHECK.C) SENDING ALL AV'S VALUES AT ONCE.
@@ -67,9 +67,13 @@ int	main(int ac, char **av)
 	if (!is_correct_input(av))
 		exit_error(NULL, NULL);
 
+	//STOP
 
-	//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+	
+	//GUIDE - 5) stack_b is equal to a NULL pointer.
 	stack_b = NULL;
+	//GUIDE - 6) stack_a is filled with the function fill_stack_values (initialization.c)
 	stack_a = fill_stack_values(ac, av);
 	stack_size = get_stack_size(stack_a);
 	assign_index(stack_a, stack_size + 1);
