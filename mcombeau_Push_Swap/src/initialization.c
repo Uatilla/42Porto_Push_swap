@@ -59,23 +59,38 @@ void	assign_index(t_stack *stack_a, int stack_size)
 
 	while (--stack_size > 0)
 	{
-		// GUIDE - 8) setting the ptr to the same location as stack_a.
+		//The main goal here is to set the stack_size inside the stack (from the highest to the lowest)
+
+
+		//GUIDE - 8.8) Return the ptr to the stack_a position and do the process again from 8.1
+		// GUIDE - 8.1) Making a temp pointer to stack_a.
 		ptr = stack_a;
 		value = INT_MIN;
 		highest = NULL;
+		//The main GOAL of this while is try to set the index on the first number (if it's possible),
+		// and set the highest index.
 		while (ptr)
 		{
+			//GUIDE - 8.2) ROUND 0 - If the ptr.value is the minimun INT possible it's index should be 1.
 			if (ptr->value == INT_MIN && ptr->index == 0)
 				ptr->index = 1;
+			//GUIDE - 8.3) ROUND 0 - Checking if current ptr.value is the biggest ptr.value until now and the index is 0 at start. 
 			if (ptr->value > value && ptr->index == 0)
 			{
+				//GUIDE - 8.4) ROUND 0 - Set the value as ptr.value and the highest as the current ptr position.
 				value = ptr->value;
 				highest = ptr;
+				//GUIDE - 8.5) ROUND 0 - reseting the ptr position to redo all validations.
 				ptr = stack_a;
 			}
+			//GUIDE - 8.6) ROUND 1 - As setted on GUIDE 8.4 the value = ptr.value and on the GUIDE 8.5 
+			//ptr restart to the stack_a position, so the program needs to change to the next position.
 			else
 				ptr = ptr->next;
 		}
+		// GUIDE - 8.7) Setting the index on the highest number.
+		//On th step 8.4 you setted the highest number inside the struct now, you are setting it's index.
+		//Pointer highest > ptr > stack_a
 		if (highest != NULL)
 			highest->index = stack_size;
 	}

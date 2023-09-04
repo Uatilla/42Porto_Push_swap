@@ -48,6 +48,8 @@ static void	push_swap(t_stack **stack_a, t_stack **stack_b, int stack_size)
 */
 int	main(int ac, char **av)
 {
+	//VERIFICATION OF THE INPUTS
+
 	//GUIDE - 1) BUILD TWO STRUCTS OF TYPE T_STRUCT (DECLARED IN PUSH_SWAP.H)
 	t_stack	*stack_a;
 	t_stack	*stack_b;
@@ -63,22 +65,25 @@ int	main(int ac, char **av)
 		printf("av[%d] is [%s]\n", i, av[i]);
 		i++;
 	}*/
-	//GUIDE - 4) IF THE INPUTS WERE INVALID, FREE THE STRUCTS T_STACK (A AND B).
+	//GUIDE - 4) IF THE INPUTS WERE INVALID, FREE THE STRUCTS T_STACK (STACK_A AND STACK_B).
 	if (!is_correct_input(av))
 		exit_error(NULL, NULL);
 
-	//STOP
 
 
-	
+	//SETTING THE PARAMETERS NEED TO PERFORM THE PROGRAM 
+	//(FILLING THE STACK AND SETTING THE INDEX)
+
 	//GUIDE - 5) stack_b is equal to a NULL pointer.
 	stack_b = NULL;
 	//GUIDE - 6) stack_a is filled with the function fill_stack_values (initialization.c)
 	stack_a = fill_stack_values(ac, av);
 	//GUIDE - 7) Get the size of the stack inside (stack.c) IT RUN'S ALL NODES OF THE STACK A.
 	stack_size = get_stack_size(stack_a);
-	//GUIDE - 8) 
+	//GUIDE - 8) Set the value of index on each stack_a node (initalization.c).
 	assign_index(stack_a, stack_size + 1);
+
+
 	push_swap(&stack_a, &stack_b, stack_size);
 	/*while(stack_a->next != NULL)
 	{

@@ -10,66 +10,129 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*MY GOAL:
+	-> 
+
+	-> */
+
 #include <stdio.h>
 
-int	ft_isdigit(int elmt)
+int	ft_isdigit(int arg_Char)
 {
-	return (elmt >= '0' && elmt <= '9');
+	return (arg_Char >= '0' && arg_Char <= '9');
 }
 
-static	int ft_is_sign(char fst_elmt)
+static	int ft_is_sign(char first_Char)
 {
-	return(fst_elmt == '-' || fst_elmt == '+');
+	if (first_Char == '-' || first_Char == '+')
+		return (1);
+	return(0);
 }
 
-static 	int	ft_isanumber(char *one_argument)
+static 	int	ft_isanumber(char *arg_String)
 {
 	int	i;
 
 	i = 0;
-	while(one_argument[i])
+	while(arg_String[i])
 	{
-		if (ft_is_sign(one_argument[i]) && one_argument[i + 1] != '\0')
+		if (ft_is_sign(arg_String[i]) && arg_String[i + 1] != '\0')
 			i++;
-		while (one_argument[i] && ft_isdigit(one_argument[i]))
+		while (arg_String[i] && ft_isdigit(arg_String[i]))
 			i++;
-		if (one_argument[i] != '\0')
+		if (arg_String[i] != '\0')
 			return (0);
 	}
 	return (1);
 }
-/*static	int	ft_is_zeroes(char *one_argument)
-{
-
-}*/
-
-static	int	ft_checker_input(char **all_arguments)
+static	int	ft_is_zeroes(char *arg_String)
 {
 	int	i;
 
-	i = 1;
-	while(all_arguments[i])
+	i = 0;
+	if (ft_is_sign(arg_String[i]) && arg_String[i + 1] != '\0')
+		i++;
+	while(arg_String[i] && arg_String[i] == '0')
+		i++;
+	if (arg_String[i] != '\0')
+		return (0);
+	return (1);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	if (*s1 == '-' && *s2 == '-')
 	{
-		if(!ft_isanumber(all_arguments[i]))
-			return (0);
-		/*if(!ft_is_zeroes(all_arguments[i]))
-			return (0);*/
+		while(*s1 == '-' || *s1 == '0')
+			s1++;
+		while(*s2 == '+' || *s2 == '0')
+			s2++;
+	}
+	while (*s1 == '+' || *s1 == '0')
+		s1++;
+	while (*s2 == '+' || *s2 == '0')
+		s2++;
+	while ((*s1 == *s2) && (*s1 != '\0') && (*s2 != '\0'))
+	{
+        s1++;
+        s2++;
+    }
+	return ((unsigned char) *s1 - (unsigned char) *s2);
+}
+
+static	int	ft_check_duplicated(char **arg_List)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (arg_List[i])
+	{
+		j = i + 1;
+		while (arg_List[j])
+		{
+			//In the If position must be a String compare.
+			if (!ft_strcmp(arg_List[i], arg_List[j]))
+				return (0);
+			j++;
+		}
 		i++;
 	}
+	return (1);
+}
+		
+
+static	int	ft_checker_input(char **arg_List)
+{
+	int	i;
+	int	zero_counter;
+
+	i = 1;
+	zero_counter = 0;
+	while(arg_List[i])
+	{
+		if(!ft_isanumber(arg_List[i]))
+			return (0);
+		zero_counter += ft_is_zeroes(arg_List[i]);
+		i++;
+	}
+	//2.1) If I found more than on argument that fits the zero (+0, 0, -0, +00, 00, -00), then return error (0);
+	if (zero_counter > 1)
+		return (0);
+	if (!ft_check_duplicated(arg_List))
+		return (0);
 	return(1);
 }
 
 int	main(int argc, char **argv)
 {
-	//If there is no parameters passed.
+	//1) Check if there is one argument (at least), if there is no parameters informed return 0.
 	if(argc < 2)
 		return (0);
-	/*Check the content:
-		*DONE It has a sign ('-' or '+')?
-		*DONE It's a number?
-		*It's a sequence of zero 0000 or -00 or +0 or -0 or +0 and so on?
-		*It's a number duplicated?
-		*/
+	/*2) Check if the input made is correct (only numbers, no more than ONE parameter zero,
+	(parameter zero can be various numbers: 0, -0, +0, 00, -00, +00 and so on), so I need to check
+	if there is only one parameter that follows the "rule" to be considered zero.*/
+
 	if(!ft_checker_input(argv))
 	{
 		printf("Error in the input!\t I have to do a free in the stack_a and stack_b");
