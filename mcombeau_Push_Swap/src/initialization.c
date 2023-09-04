@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcombeau <mcombeau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: uatilla <uatilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:44:42 by mcombeau          #+#    #+#             */
-/*   Updated: 2022/04/30 13:55:45 by mcombeau         ###   ########.fr       */
+/*   Updated: 2023/08/31 21:56:08 by uatilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,15 @@ t_stack	*fill_stack_values(int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
+		//GUIDE - 6.1) the Variable nb receives the argument in the i position converted into integer.
 		nb = ft_atoi(av[i]);
+		//GUIDE - 6.2) IF the int informed is bigger or lower than what an int can receive return error.
 		if (nb > INT_MAX || nb < INT_MIN)
 			exit_error(&stack_a, NULL);
+		//GUIDE - 6.3) If it's the first value of the stack_a (first node) create a new node with nb as a content.
 		if (i == 1)
 			stack_a = stack_new((int)nb);
+		//GUIDE - 6.4 If isn't the first node, alocate the new node in the sequence on the stack_a.
 		else
 			stack_add_bottom(&stack_a, stack_new((int)nb));
 		i++;
@@ -55,6 +59,7 @@ void	assign_index(t_stack *stack_a, int stack_size)
 
 	while (--stack_size > 0)
 	{
+		// GUIDE - 8) setting the ptr to the same location as stack_a.
 		ptr = stack_a;
 		value = INT_MIN;
 		highest = NULL;

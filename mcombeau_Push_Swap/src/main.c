@@ -6,7 +6,7 @@
 /*   By: uatilla <uatilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:04:00 by mcombeau          #+#    #+#             */
-/*   Updated: 2023/08/29 17:22:23 by uatilla          ###   ########.fr       */
+/*   Updated: 2023/08/31 20:55:41 by uatilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ int	main(int ac, char **av)
 	stack_b = NULL;
 	//GUIDE - 6) stack_a is filled with the function fill_stack_values (initialization.c)
 	stack_a = fill_stack_values(ac, av);
+	//GUIDE - 7) Get the size of the stack inside (stack.c) IT RUN'S ALL NODES OF THE STACK A.
 	stack_size = get_stack_size(stack_a);
+	//GUIDE - 8) 
 	assign_index(stack_a, stack_size + 1);
 	push_swap(&stack_a, &stack_b, stack_size);
 	/*while(stack_a->next != NULL)

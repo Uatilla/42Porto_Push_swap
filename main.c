@@ -52,8 +52,8 @@ static	int	ft_checker_input(char **all_arguments)
 	{
 		if(!ft_isanumber(all_arguments[i]))
 			return (0);
-		if(!ft_is_zeroes(all_arguments[i]))
-			return (0);
+		/*if(!ft_is_zeroes(all_arguments[i]))
+			return (0);*/
 		i++;
 	}
 	return(1);
