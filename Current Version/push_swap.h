@@ -25,6 +25,7 @@ typedef struct s_push
 	int		value;
 	int		index;
 	struct s_push	*next;
+	/*struct s_push	*tail;*/
 }	t_stack;
 
 /*_________________________________[FUNCTIONS]_______________________________*/
@@ -33,8 +34,6 @@ typedef struct s_push
 //INPUT VALIDATION:*******************************************************
 
 int	ft_checker_input(char **arg_List);
-
-int	ft_is_zeroes(char *arg_String);
 
 int	ft_isdigit(int arg_Char);
 
@@ -46,8 +45,13 @@ int	ft_isanumber(char *arg_String);
 
 int	ft_atoi(const char *nptr);
 
+//LINKING NODES:**********************************************************
+
+int	ft_linking_nodes(char **argv, t_stack *stack_push);
+
 //CHECKING DUPLICATED:****************************************************
 
 int	ft_check_nodes_duplicated(t_stack *check_nodes);
+
 
 #endif
