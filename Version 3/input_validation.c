@@ -113,7 +113,7 @@ int	ft_linking_nodes(char **argv, t_stack *stack_push)
 				new_node->value = ft_atoi(argv[i]);
 				new_node->index = 0;
 				new_node->next = NULL;
-				//3.3) Linking prev and next of the node created with a pointer.
+				//3.3) Linking the node created with a pointer.
 				linking_nodes = stack_push;
 				while (linking_nodes->next != NULL)
 					linking_nodes = linking_nodes->next;
@@ -122,75 +122,27 @@ int	ft_linking_nodes(char **argv, t_stack *stack_push)
 			}
 		}
 	}
-	//3.4) Linking the head and tail to make a double circle linked list.
-	if (new_node)
-	{
-		new_node->next = stack_push;
-		stack_push->prev = new_node;
-	}
     return (1);
 }
 
 
-
 int	ft_check_nodes_duplicated(t_stack *stack_push)
 {
-	t_stack *node_a;
-	t_stack *node_b;
-	int	trigger;
+	t_stack	*check_nodes;
+	t_stack	*temp;
 
-	node_a = stack_push;
-	trigger = 1;
-	/*4.1) stack_push is the head, so the checking of duplicated 
-	numbers should run only until stack_push position.*/
-	while (node_a != stack_push || trigger == 1)
+	check_nodes = stack_push;
+	while (check_nodes != NULL)
 	{
-		trigger = 0;
-		node_b = node_a->next;
-		while(node_b != stack_push)
+		temp = check_nodes->next;
+		while (temp != NULL)
 		{
-			if (node_a->value == node_b->value)
+			if (check_nodes->value == temp->value)
 				return (0);
-			node_b = node_b->next;
+			temp = temp->next;
 		}
-		node_a = node_a->next;
+		check_nodes = check_nodes->next;
 	}
-
 	return (1);
 }
 
-void	ft_set_index(int argc, t_stack *stack_push)
-{
-	t_stack *check_index;
-	t_stack *highest_node;
-	int	current_highest;
-	int	trigger;
-
-	if (argc == 2)
-	{
-		stack_push->index = 1;
-		return ;
-	}
-	while (--argc > 0)
-	{
-		/*5.1) Reseting all conference values to verify the next highest number.*/
-		check_index = stack_push;
-		current_highest = INT_MIN;
-		highest_node = NULL;
-		trigger = 1;
-		while (check_index != stack_push || trigger == 1)
-		{
-			trigger = 0;
-			if (check_index->value == INT_MIN && check_index->index == 0)
-				check_index->index = 1;
-			if (check_index->value > current_highest && check_index->index == 0)
-			{
-				current_highest = check_index->value;
-				highest_node = check_index;
-			}
-		check_index = check_index->next;
-		}
-		if (highest_node != NULL)
-			highest_node->index = argc;
-	}
-}

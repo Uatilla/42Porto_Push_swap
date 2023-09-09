@@ -12,6 +12,29 @@
 
 #include "push_swap.h"
 
+static void	do_swap(t_stack **stack_push)
+{
+	t_stack	*tail;
+	t_stack *old_head;
+	t_stack	*new_head;
+
+	if ((*stack_push)->next == NULL)
+		return ;
+	tail = (*stack_push)->prev;
+	new_head = (*stack_push)->next;
+	old_head = *stack_push;
+
+	tail->next = new_head;
+	new_head->next->prev = old_head;
+	old_head->next = new_head->next;
+	new_head->next = old_head;
+	old_head->prev = new_head;
+	new_head->prev = tail;
+	*stack_push = new_head;
+}
+
+
+
 int	main(int argc, char **argv)
 {
 	int		i;
@@ -39,46 +62,78 @@ int	main(int argc, char **argv)
 		return (0);
 	if(!ft_linking_nodes(argv, stack_push))
 	{
-		printf("KO: Failed to link the nodes\n");
+		printf("KO: Couldn't Link the nodes.\n");
 		return (0);
 	}
 	else
+		printf("OK: Linking done.\n");
+		/*4) Check if the values are duplicated only if there is more than 2 arguments passed.*/
+	if (argc > 2)
 	{
-		printf("OK: Nodes linked correctly.\n");
+		if (!ft_check_nodes_duplicated(stack_push))
+		{
+			printf("KO: Numbers duplicated.\n");
+			return (0);
+		}
+		else
+			printf("OK: Nothing duplicated.\n");
 	}
+	/*5) Set the ideal position (index) on each node.*/
+	ft_set_index(argc, stack_push);
+
+	if (ft_is_sorted (stack_push))
+		printf("OK: Is sorted!\n");
+	else
+		printf("KO: It's not sorted!\n");
 	
-	/*4) Checking if there is duplicated values*/
-	if (!ft_check_nodes_duplicated(stack_push))
-	{
-		printf("KO: Numbers duplicated.\n");
-		return (0);
-	}
-	printf("OK: Nothing duplicated.\n");
-    
-    //PRINTING THE NODES:
+
+	//PRINT BEFORE THE OPERATIONS:
 	print = stack_push;
-    while(print)
+	i = 0;
+	printf("BEFORE THE OPERATION - FORWARD!\n");
+    while(i < argc - 1)
     {
-        printf("Node [%d] = %d\t", i, print->value);
-        print = print->next;
+        printf("[%d]: %d\t", print->index, print->value);
+		print = print->next;
         i++;
     }
-
-	/*5) Programming the sort functions*/
-	/*print = stack_push;
-	//do_sa
-	temp = print->next;
-	print->next = temp->next;
-	temp->next = print;
-	i = 0;
 	printf("\n");
-	 while(temp)
+	/*i = 0;
+	printf("BEFORE THE OPERATION - BACKWARD!\n");
+	while(i < argc - 1)
     {
-        printf("Node [%d] = %d\t", i, temp->value);
-        temp = temp->next;
+        print = print->prev;
+		printf("[%d]: %d\t", print->index, print->value);
+		
         i++;
     }*/
+	//do_sa
+	do_swap(&stack_push); //ONLY CALL THIS FUNCTION IF THERE'S ONE OR MORE NODES OR THE DATA ISN'T SORTED.
+	print = stack_push;
+	printf("\n");
+	i = 0;
+	printf("AFTER THE OPERATION - FORWARD!\n");
+    while(i < argc - 1)
+    {
+        printf("[%d]: %d\t", print->index, print->value);
+		print = print->next;
+        i++;
+    }
+	/*printf("\n");
+	i = 0;
+	printf("AFTER THE OPERATION - BACKWARD!\n");
+	while(i < argc - 1)
+    {
+        print = print->prev;
+		printf("[%d]: %d\t", print->index, print->value);
+		
+        i++;
+    }
+	printf("\n");*/
 
+	
+	
+	//Defining the index of each node.
 
 	return (0);
 }

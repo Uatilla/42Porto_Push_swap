@@ -50,17 +50,9 @@ int	ft_atoi(const char *nptr);
 
 int	ft_linking_nodes(char **argv, t_stack *stack_push);
 
-//CHECKING DUPLICATED VALUES:*********************************************
+//CHECKING DUPLICATED:****************************************************
 
 int	ft_check_nodes_duplicated(t_stack *check_nodes);
-
-//SETTING INDEXES:********************************************************
-
-void	ft_set_index(int argc, t_stack *stack_push);
-
-//CHECKING IF IT'S ALREADY SORTED:****************************************
-
-int	ft_is_sorted(t_stack *stack_push);
 
 
 #endif

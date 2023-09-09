@@ -12,25 +12,6 @@
 
 #include "push_swap.h"
 
-int	ft_is_sorted(t_stack *stack_push)
-{
-	t_stack	*temp;
-
-	if (stack_push->next == NULL)
-	{
-		printf("Only one node! It's already sorted!\n");
-		return (1);
-	}
-	temp = stack_push;
-	while (temp->next != stack_push)
-	{
-		if (temp->value > temp->next->value)
-			return (0);
-		temp = temp->next;	
-	}
-	return (1);
-
-}
 
 /*5) Programming the sort functions*/
 	/*print = stack_push;
