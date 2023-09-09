@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: uatilla <uatilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 18:47:31 by uviana-a          #+#    #+#             */
-/*   Updated: 2023/08/30 18:47:34 by uviana-a         ###   ########.fr       */
+/*   Updated: 2023/09/08 20:09:33 by uatilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int argc, char **argv)
     }
 
 	/*5) Programming the sort functions*/
-	print = stack_push;
+	/*print = stack_push;
 	//do_sa
 	temp = print->next;
 	print->next = temp->next;
@@ -77,7 +77,7 @@ int	main(int argc, char **argv)
         printf("Node [%d] = %d\t", i, temp->value);
         temp = temp->next;
         i++;
-    }
+    }*/
 
 
 	return (0);

@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   input_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: uatilla <uatilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:36:41 by uviana-a          #+#    #+#             */
-/*   Updated: 2023/09/05 19:36:43 by uviana-a         ###   ########.fr       */
+/*   Updated: 2023/09/08 19:44:44 by uatilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+
 int	ft_checker_input(char **arg_List)
 {
 	int	i;
 
-	i = 1;
-	while (arg_List[i])
+	i = 0;
+	while (arg_List[++i])
 	{
 		/*2.1) Check if the argument is only made of numbers.*/
 		if (!ft_isanumber(arg_List[i]))
 			return (0);
-		i++;
 	}
 	return (1);
 }
@@ -39,6 +39,8 @@ int	ft_isdigit(int arg_Char)
 	return (arg_Char >= '0' && arg_Char <= '9');
 }
 
+/*if I change the inside whiled to while (arg_String[++i]) e should 
+change the second while to remove it's i++ too.*/
 int	ft_isanumber(char *arg_String)
 {
 	int	i;
@@ -80,6 +82,8 @@ int	ft_atoi(const char *nptr)
 	return (signal * number);
 }
 
+//I can put the right index here. just need to add a condition to run the
+//while until all index were done (incrementing i until argc).
 int	ft_linking_nodes(char **argv, t_stack *stack_push)
 {
 	int	i;
@@ -123,6 +127,7 @@ int	ft_check_nodes_duplicated(t_stack *stack_push)
 	t_stack	*check_nodes;
 	t_stack	*temp;
 
+	check_nodes = stack_push;
 	while (check_nodes != NULL)
 	{
 		temp = check_nodes->next;
