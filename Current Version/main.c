@@ -12,34 +12,21 @@
 
 #include "push_swap.h"
 
-static void	do_swap(t_stack **stack_push)
+void	ft_push_swap(t_stack **stack_a, t_stack **stack_b)
 {
-	t_stack	*tail;
-	t_stack *old_head;
-	t_stack	*new_head;
-
-	if ((*stack_push)->next == NULL)
-		return ;
-	tail = (*stack_push)->prev;
-	new_head = (*stack_push)->next;
-	old_head = *stack_push;
-
-	tail->next = new_head;
-	new_head->next->prev = old_head;
-	old_head->next = new_head->next;
-	new_head->next = old_head;
-	old_head->prev = new_head;
-	new_head->prev = tail;
-	*stack_push = new_head;
+	//do_sa(stack_a);
+	//do_pa(stack_a, stack_b);
+	//do_ra(stack_a);
+	//do_rra(stack_a);
 }
-
-
 
 int	main(int argc, char **argv)
 {
-	int		i;
-	t_stack	*stack_push;
-	t_stack *print;
+	int		trigger;
+	t_stack	*stack_a;
+	t_stack	*stack_b;
+	t_stack *print_a;
+	t_stack *print_b;
 	t_stack	*temp;
 
 	/*1) Check if there is one argument (at least), 
@@ -54,13 +41,15 @@ int	main(int argc, char **argv)
 	}
 	else
 		printf("OK: Arguments valids\n");
-
+	if (argc == 2)
+		return (0);
 
 	/*3) Convert the argument into an integer and stores it inside a linked list.*/
-	stack_push = malloc(sizeof(t_stack));
-	if (!stack_push)
+	stack_a = malloc(sizeof(t_stack));
+	stack_b = NULL;
+	if (!stack_a)
 		return (0);
-	if(!ft_linking_nodes(argv, stack_push))
+	if(!ft_linking_nodes(argv, stack_a))
 	{
 		printf("KO: Couldn't Link the nodes.\n");
 		return (0);
@@ -70,7 +59,7 @@ int	main(int argc, char **argv)
 		/*4) Check if the values are duplicated only if there is more than 2 arguments passed.*/
 	if (argc > 2)
 	{
-		if (!ft_check_nodes_duplicated(stack_push))
+		if (!ft_check_nodes_duplicated(stack_a))
 		{
 			printf("KO: Numbers duplicated.\n");
 			return (0);
@@ -79,61 +68,60 @@ int	main(int argc, char **argv)
 			printf("OK: Nothing duplicated.\n");
 	}
 	/*5) Set the ideal position (index) on each node.*/
-	ft_set_index(argc, stack_push);
+	ft_set_index(argc, stack_a);
 
-	if (ft_is_sorted (stack_push))
+	if (ft_is_sorted (stack_a))
 		printf("OK: Is sorted!\n");
 	else
 		printf("KO: It's not sorted!\n");
 	
 
-	//PRINT BEFORE THE OPERATIONS:
-	print = stack_push;
-	i = 0;
-	printf("BEFORE THE OPERATION - FORWARD!\n");
-    while(i < argc - 1)
+	//PRINTING THE OPERATIONS:
+	print_a = stack_a;
+	print_b = stack_b;
+	trigger = 1;
+	printf("BEFORE - STACK A!\n");
+    while(print_a && (trigger == 1 || print_a != stack_a))
     {
-        printf("[%d]: %d\t", print->index, print->value);
-		print = print->next;
-        i++;
+		trigger = 0;
+        printf("[%d]: %d\t", print_a->index, print_a->value);
+		print_a = print_a->next;
     }
 	printf("\n");
-	/*i = 0;
-	printf("BEFORE THE OPERATION - BACKWARD!\n");
-	while(i < argc - 1)
+
+	trigger = 1;
+	printf("BEFORE - STACK B!\n");
+    while(print_b && (trigger == 1 || print_b != stack_b))
     {
-        print = print->prev;
-		printf("[%d]: %d\t", print->index, print->value);
-		
-        i++;
-    }*/
-	//do_sa
-	do_swap(&stack_push); //ONLY CALL THIS FUNCTION IF THERE'S ONE OR MORE NODES OR THE DATA ISN'T SORTED.
-	print = stack_push;
+		trigger = 0;
+        printf("[%d]: %d\t", print_b->index, print_b->value);
+		print_b = print_b->next;
+    }
 	printf("\n");
-	i = 0;
-	printf("AFTER THE OPERATION - FORWARD!\n");
-    while(i < argc - 1)
-    {
-        printf("[%d]: %d\t", print->index, print->value);
-		print = print->next;
-        i++;
-    }
-	/*printf("\n");
-	i = 0;
-	printf("AFTER THE OPERATION - BACKWARD!\n");
-	while(i < argc - 1)
-    {
-        print = print->prev;
-		printf("[%d]: %d\t", print->index, print->value);
-		
-        i++;
-    }
-	printf("\n");*/
 
+	//Operations:
+	ft_push_swap(&stack_a, &stack_b);
 	
-	
-	//Defining the index of each node.
+	print_a = stack_a;
+	print_b = stack_b;
+	trigger = 1;
+	printf("AFTER - STACK A!\n");
+    while(print_a && (trigger == 1 || print_a != stack_a))
+    {
+		trigger = 0;
+        printf("[%d]: %d\t", print_a->index, print_a->value);
+		print_a = print_a->next;
+    }
+	printf("\n");
 
+	trigger = 1;
+	printf("AFTER - STACK B!\n");
+    while(print_b && (trigger == 1 || print_b != stack_b))
+    {
+		trigger = 0;
+        printf("[%d]: %d\t", print_b->index, print_b->value);
+		print_b = print_b->next;
+    }
+	printf("\n");
 	return (0);
 }

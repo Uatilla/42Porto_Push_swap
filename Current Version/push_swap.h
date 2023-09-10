@@ -62,5 +62,14 @@ void	ft_set_index(int argc, t_stack *stack_push);
 
 int	ft_is_sorted(t_stack *stack_push);
 
+//SORTING THE NUMBERS:****************************************************
+
+void	do_sa(t_stack **stack_a);
+
+void	do_pa(t_stack **stack_a, t_stack **stack_b);
+
+void	do_ra(t_stack **stack_a);
+
+void	do_rra(t_stack	**stack_a);
 
 #endif
