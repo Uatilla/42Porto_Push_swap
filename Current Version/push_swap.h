@@ -66,7 +66,11 @@ int	ft_is_sorted(t_stack *stack_push);
 
 void	do_sa(t_stack **stack_a);
 
-void	do_pa(t_stack **stack_a, t_stack **stack_b);
+void	do_sb(t_stack **stack_b);
+
+void	do_pa(t_stack **stack_b, t_stack **stack_a);
+
+void	do_pb(t_stack **stack_a, t_stack **stack_b);
 
 void	do_ra(t_stack **stack_a);
 

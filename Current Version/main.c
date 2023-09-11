@@ -12,10 +12,32 @@
 
 #include "push_swap.h"
 
+int ft_size_stack(t_stack *stack)
+{
+	t_stack *temp;
+	int	trigger;
+	int i;
+
+	temp = stack;
+	trigger = 1;
+	i = 0;
+	while (temp && (temp != stack || trigger == 1))
+	{
+		trigger = 0;
+		i++;
+		temp = temp->next;
+	}
+	return (i);
+}
+
 void	ft_push_swap(t_stack **stack_a, t_stack **stack_b)
 {
 	//do_sa(stack_a);
-	//do_pa(stack_a, stack_b);
+	//do_sb(stack_b);
+	//do_pa(stack_b, stack_a);
+	do_pb(stack_a, stack_b);
+	do_pa(stack_b, stack_a);
+	do_pa(stack_b, stack_a);
 	//do_ra(stack_a);
 	//do_rra(stack_a);
 }
@@ -23,10 +45,12 @@ void	ft_push_swap(t_stack **stack_a, t_stack **stack_b)
 int	main(int argc, char **argv)
 {
 	int		trigger;
+	int		size_a;
+	int		size_b;
 	t_stack	*stack_a;
 	t_stack	*stack_b;
-	t_stack *print_a;
-	t_stack *print_b;
+	t_stack	*print_a;
+	t_stack	*print_b;
 	t_stack	*temp;
 
 	/*1) Check if there is one argument (at least), 
@@ -76,52 +100,96 @@ int	main(int argc, char **argv)
 		printf("KO: It's not sorted!\n");
 	
 
-	//PRINTING THE OPERATIONS:
-	print_a = stack_a;
-	print_b = stack_b;
-	trigger = 1;
-	printf("BEFORE - STACK A!\n");
-    while(print_a && (trigger == 1 || print_a != stack_a))
-    {
-		trigger = 0;
-        printf("[%d]: %d\t", print_a->index, print_a->value);
-		print_a = print_a->next;
-    }
-	printf("\n");
-
-	trigger = 1;
-	printf("BEFORE - STACK B!\n");
-    while(print_b && (trigger == 1 || print_b != stack_b))
-    {
-		trigger = 0;
-        printf("[%d]: %d\t", print_b->index, print_b->value);
-		print_b = print_b->next;
-    }
-	printf("\n");
-
-	//Operations:
-	ft_push_swap(&stack_a, &stack_b);
+	//GET THE SIZE
 	
+	size_a = ft_size_stack(stack_a);
+	size_b = ft_size_stack(stack_b);
+	
+	//PRINTING THE OPERATIONS:
+	
+	int	biggest_size;
+	int	last_print_a;
+	int	last_print_b;
+	if (size_a > size_b)
+		biggest_size = size_a;
+	else
+		biggest_size = size_b;
+	last_print_a = 999999999;
+	last_print_b = 999999999;
 	print_a = stack_a;
 	print_b = stack_b;
-	trigger = 1;
-	printf("AFTER - STACK A!\n");
-    while(print_a && (trigger == 1 || print_a != stack_a))
-    {
-		trigger = 0;
-        printf("[%d]: %d\t", print_a->index, print_a->value);
-		print_a = print_a->next;
-    }
-	printf("\n");
+	printf("\tBEFORE:\n");
+	printf("   A\t\t B\n");
+	while (--biggest_size >= 0)
+	{
+		trigger = 1;
+		if(print_a && (trigger == 1 || print_a != stack_a))
+    	{
+			trigger = 0;
+			if (last_print_a != print_a->value)
+			{
+				printf("[%d]: %d\t\t", print_a->index, print_a->value);
+				last_print_a = print_a->value;
+				print_a = print_a->next;
+			}
+    	}
+		if(print_b && (trigger == 1 || print_b != stack_b))
+    	{
+			trigger = 0;
+			if (last_print_b != print_b->value)
+			{
+				printf("[%d]: %d", print_b->index, print_b->value);
+				last_print_b = print_b->value;
+				print_b = print_b->next;
+			}
+    	}
+		printf("\n");
+	}
+	ft_push_swap(&stack_a, &stack_b);
 
-	trigger = 1;
-	printf("AFTER - STACK B!\n");
-    while(print_b && (trigger == 1 || print_b != stack_b))
-    {
-		trigger = 0;
-        printf("[%d]: %d\t", print_b->index, print_b->value);
-		print_b = print_b->next;
-    }
-	printf("\n");
+
+
+//GET THE SIZE
+	
+	size_a = ft_size_stack(stack_a);
+	size_b = ft_size_stack(stack_b);
+	
+	//PRINTING THE OPERATIONS:
+	
+	if (size_a > size_b)
+		biggest_size = size_a;
+	else
+		biggest_size = size_b;
+	print_a = stack_a;
+	print_b = stack_b;
+	printf("\n\tAFTER:\n");
+	printf("   A\t\t B\n");
+	while (--biggest_size >= 0)
+	{
+		trigger = 1;
+		if(print_a && (trigger == 1 || print_a != stack_a))
+    	{
+			trigger = 0;
+			if (last_print_a != print_a->value)
+			{
+				last_print_a = print_a->value;
+				printf("[%d]: %d\t\t", print_a->index, print_a->value);
+				print_a = print_a->next;
+
+			}
+    	}
+		trigger = 1;
+		if(print_b && (trigger == 1 || print_b != stack_b))
+    	{
+			trigger = 0;
+			if (last_print_b != print_b->value)
+			{
+				last_print_b = print_b->value;
+				printf("[%d]: %d", print_b->index, print_b->value);
+				print_b = print_b->next;
+			}
+    	}
+		printf("\n");
+	}
 	return (0);
 }

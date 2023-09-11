@@ -38,6 +38,8 @@ static void	do_swap(t_stack **stack_push)
 	t_stack *old_head;
 	t_stack	*new_head;
 
+	if (!*stack_push)
+		return ;
 	if ((*stack_push)->next == NULL)
 		return ;
 	tail = (*stack_push)->prev;
@@ -56,6 +58,11 @@ static void	do_swap(t_stack **stack_push)
 void	do_sa(t_stack **stack_a)
 {
 	do_swap(&*stack_a);
+}
+
+void	do_sb(t_stack **stack_b)
+{
+	do_swap(&*stack_b);
 }
 
 static void	do_push(t_stack **src, t_stack **dest)
@@ -80,7 +87,12 @@ static void	do_push(t_stack **src, t_stack **dest)
 	*src = new_head_src;
 }
 
-void	do_pa(t_stack **stack_a, t_stack **stack_b)
+void	do_pa(t_stack **stack_b, t_stack **stack_a)
+{
+	do_push(&*stack_b, &*stack_a);
+}
+
+void	do_pb(t_stack **stack_a, t_stack **stack_b)
 {
 	do_push(&*stack_a, &*stack_b);
 }
