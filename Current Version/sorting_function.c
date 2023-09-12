@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting_function.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: uatilla <uatilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:24:13 by uviana-a          #+#    #+#             */
-/*   Updated: 2023/09/07 19:24:15 by uviana-a         ###   ########.fr       */
+/*   Updated: 2023/09/12 08:57:10 by uatilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ int	ft_is_sorted(t_stack *stack_push)
 	t_stack	*temp;
 
 	if (stack_push->next == NULL)
-	{
-		printf("Only one node! It's already sorted!\n");
 		return (1);
-	}
 	temp = stack_push;
 	while (temp->next != stack_push)
 	{
@@ -65,7 +62,7 @@ void	do_sb(t_stack **stack_b)
 	do_swap(&*stack_b);
 }
 
-static void	do_push(t_stack **src, t_stack **dest)
+/*static void	do_push(t_stack **src, t_stack **dest)
 {
 	t_stack *new_head_src;
 
@@ -83,7 +80,44 @@ static void	do_push(t_stack **src, t_stack **dest)
 	}
 	else
 		(*src)->prev = (*dest)->prev;
-	*dest = *src;
+	if ((*src)->next == *src)
+		*dest = NULL;
+	else
+		*dest = *src;
+	*src = new_head_src;
+}*/
+
+static void	do_push(t_stack **src, t_stack **dest)
+{
+	t_stack *new_head_src;
+	t_stack	*tail;
+	t_stack	*old_head;
+
+	if (*src == NULL)
+		return ;
+	old_head = *src;
+	new_head_src = old_head->next;
+	tail = old_head->prev;
+	tail->next = new_head_src;
+	new_head_src->prev = tail;
+	
+	//Setting the prev of the dest.
+	if (*dest == NULL)
+	{
+		old_head->prev = old_head;
+		old_head->next = old_head;
+	}
+	else
+	{
+		old_head->next = *dest;
+		old_head->prev = (*dest)->prev;
+		(*dest)->prev->next = old_head;
+		(*dest)->prev = old_head;
+	}
+	*dest = old_head;
+	/*If the source has only one element, the stack_source need to be NULL after do push operation*/
+	if (*src == tail)
+		new_head_src = NULL;
 	*src = new_head_src;
 }
 
@@ -110,6 +144,17 @@ void	do_ra(t_stack **stack_a)
 	do_rotate(&*stack_a);
 }
 
+void	do_rb(t_stack **stack_b)
+{
+	do_rotate(&*stack_b);
+}
+
+void	do_rr(t_stack **stack_a, t_stack **stack_b)
+{
+	do_rotate(&*stack_a);
+	do_rotate(&*stack_b);
+}
+
 static void	do_rev_rotate(t_stack **src)
 {
 	if (*src == NULL)
@@ -120,4 +165,15 @@ static void	do_rev_rotate(t_stack **src)
 void	do_rra(t_stack	**stack_a)
 {
 	do_rev_rotate(&*stack_a);
+}
+
+void	do_rrb(t_stack	**stack_b)
+{
+	do_rev_rotate(&*stack_b);
+}
+
+void	do_rrr(t_stack	**stack_a, t_stack **stack_b)
+{
+	do_rev_rotate(&*stack_a);
+	do_rev_rotate(&*stack_b);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: uviana-a <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: uatilla <uatilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:03:53 by uviana-a          #+#    #+#             */
-/*   Updated: 2023/09/05 19:03:55 by uviana-a         ###   ########.fr       */
+/*   Updated: 2023/09/12 08:59:22 by uatilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <unistd.h>
 
 /*__________________________________[STRUCT] ________________________________*/
 
@@ -25,6 +26,7 @@ typedef struct s_push
 {
 	int		value;
 	int		index;
+	int		head;
 	struct s_push	*next;
 	struct s_push	*prev;
 }	t_stack;
@@ -74,6 +76,23 @@ void	do_pb(t_stack **stack_a, t_stack **stack_b);
 
 void	do_ra(t_stack **stack_a);
 
+void	do_rb(t_stack **stack_b);
+
+void	do_rr(t_stack **stack_a, t_stack **stack_b);
+
 void	do_rra(t_stack	**stack_a);
+
+void	do_rrb(t_stack	**stack_b);
+
+void	do_rrr(t_stack	**stack_a, t_stack **stack_b);
+
+//UTILS FUNCTIONS:********************************************************
+
+void	ft_putstr_fd(char *s, int fd);
+
+int ft_size_stack(t_stack *stack);
+
+# define ERROR_DUPLICATE "KO: Numbers duplicated.\n"
+
 
 #endif
