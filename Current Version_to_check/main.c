@@ -12,37 +12,20 @@
 
 #include "push_swap.h"
 
-int ft_size_stack(t_stack *stack)
-{
-	t_stack *temp;
-	int	trigger;
-	int i;
-
-	temp = stack;
-	trigger = 1;
-	i = 0;
-	while (temp && (temp != stack || trigger == 1))
-	{
-		trigger = 0;
-		i++;
-		temp = temp->next;
-	}
-	return (i);
-}
-
 void	ft_push_swap(t_stack **stack_a, t_stack **stack_b)
 {
 	//do_sa(stack_a);
 	//do_sb(stack_b);
 	//do_pa(stack_b, stack_a);
-	do_pb(stack_a, stack_b);
-	do_pb(stack_a, stack_b);
-	do_pb(stack_a, stack_b);
-	do_pb(stack_a, stack_b);
+	//do_pb(stack_a, stack_b);
 	//do_pb(stack_a, stack_b);
 	//do_pb(stack_a, stack_b);
 	//do_ra(stack_a);
+	//do_rb(stack_b);
+	//do_rr(stack_a, stack_b);
 	//do_rra(stack_a);
+	//do_rrb(stack_b);
+	//do_rrr(stack_a, stack_b);
 }
 
 int	main(int argc, char **argv)
@@ -61,11 +44,11 @@ int	main(int argc, char **argv)
 	/*2) Check if the input made is correct (only numbers)*/
 	if (!ft_checker_input(argv))
 	{
-		printf("KO: Arguments invalids\n");
+		ft_putstr_fd("KO: Arguments invalids\n", 1);
 		return (0);
 	}
 	else
-		printf("OK: Arguments valids\n");
+		ft_putstr_fd("OK: Arguments valids\n", 1);
 	if (argc == 2)
 		return (0);
 
@@ -76,40 +59,44 @@ int	main(int argc, char **argv)
 		return (0);
 	if(!ft_linking_nodes(argv, stack_a))
 	{
-		printf("KO: Couldn't Link the nodes.\n");
+		ft_putstr_fd("KO: Couldn't Link the nodes.\n", 1);
 		return (0);
 	}
 	else
-		printf("OK: Linking done.\n");
+		ft_putstr_fd("OK: Linking done.\n", 1);
 		/*4) Check if the values are duplicated only if there is more than 2 arguments passed.*/
 	if (argc > 2)
 	{
 		if (!ft_check_nodes_duplicated(stack_a))
 		{
-			printf("KO: Numbers duplicated.\n");
+			ft_putstr_fd(ERROR_DUPLICATE, 1);
 			return (0);
 		}
 		else
-			printf("OK: Nothing duplicated.\n");
+			ft_putstr_fd("OK: Nothing duplicated.\n", 1);
 	}
 	/*5) Set the ideal position (index) on each node.*/
 	ft_set_index(argc, stack_a);
 
+	/*6) Check if the order of the stack_a is already sorted.*/
 	if (ft_is_sorted (stack_a))
-		printf("OK: Is sorted!\n");
+	{
+		ft_putstr_fd("OK: Is sorted!\n", 1);
+		return (0);
+	}
 	else
-		printf("KO: It's not sorted!\n");
+		ft_putstr_fd("KO: It's not sorted!\n", 1);
 	
+	/*7) Checking the size of each stack.*/
 
-	//GET THE SIZE
-	
 	size_a = ft_size_stack(stack_a);
 	size_b = ft_size_stack(stack_b);
 	
-	//PRINTING THE OPERATIONS:
+	//PRINTING THE STACK BEFORE THE OPERATIONS!:
+	printf("====================| BEFORE |====================\n");
 	temp = stack_a;
 	trigger = 1;
-	printf("STACK_A\n");
+	ft_putstr_fd("STACK_A:   ", 1);
 	while (temp && (temp != stack_a || trigger == 1))
 	{
 		trigger = 0;
@@ -119,7 +106,7 @@ int	main(int argc, char **argv)
 	printf("\n");
 	temp = stack_b;
 	trigger = 1;
-	printf("STACK_B\n");
+	printf("STACK_B:   ");
 	while (temp && (temp != stack_b || trigger == 1))
 	{
 		trigger = 0;
@@ -129,11 +116,11 @@ int	main(int argc, char **argv)
 	printf("\n");
 
 	ft_push_swap(&stack_a, &stack_b);
-
-	
+	//PRINTING THE STACK AFTER THE OPERATIONS!:
+	printf("====================| AFTER |=====================\n");
 	temp = stack_a;
 	trigger = 1;
-	printf("STACK_A\n");
+	printf("STACK_A:   ");
 	while (temp && (temp != stack_a || trigger == 1))
 	{
 		trigger = 0;
@@ -143,7 +130,7 @@ int	main(int argc, char **argv)
 	printf("\n");
 	temp = stack_b;
 	trigger = 1;
-	printf("STACK_B\n");
+	printf("STACK_B:   ");
 	while (temp && (temp != stack_b || trigger == 1))
 	{
 		trigger = 0;
