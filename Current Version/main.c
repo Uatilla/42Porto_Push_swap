@@ -12,20 +12,53 @@
 
 #include "push_swap.h"
 
-void	ft_push_swap(t_stack **stack_a, t_stack **stack_b)
+int	ft_find_highest_index(t_stack **stack)
 {
-	//do_sa(stack_a);
-	//do_sb(stack_b);
-	//do_pa(stack_b, stack_a);
-	//do_pb(stack_a, stack_b);
-	//do_pb(stack_a, stack_b);
-	//do_pb(stack_a, stack_b);
-	//do_ra(stack_a);
-	//do_rb(stack_b);
-	//do_rr(stack_a, stack_b);
-	//do_rra(stack_a);
-	//do_rrb(stack_b);
-	//do_rrr(stack_a, stack_b);
+	t_stack *temp;
+	int	highest_index;
+	int	trigger;
+
+	temp = *stack;
+	trigger = 1;
+	if (!temp)
+		return (0);
+	while (temp && (temp != *stack || trigger == 1))
+	{
+		trigger = 0;
+		if (temp == *stack)
+			highest_index = temp->index;
+		else if (highest_index < temp->index)
+		{
+			highest_index = temp->index;
+		}
+		temp = temp->next;
+
+	}
+	printf("Highest Index: %d\n",highest_index);
+	return (highest_index);
+}
+
+void	sort_three(t_stack **stack)
+{
+	int	highest_index;
+
+	highest_index = ft_find_highest_index(stack);
+	if (ft_is_sorted(*stack))
+		return ;
+	if ((*stack)->index == highest_index)
+		do_ra(stack);
+	else if ((*stack)->next->index == highest_index)
+		do_rra(stack);
+	if ((*stack)->index > (*stack)->next->index)
+		do_sa(stack);
+}
+void	ft_push_swap(t_stack **stack_a, t_stack **stack_b, int size_stack)
+{
+	if (size_stack == 2 && !ft_is_sorted(*stack_a))
+		do_sa(stack_a);
+	else if (size_stack == 3)
+		sort_three(stack_a);
+	
 }
 
 int	main(int argc, char **argv)
@@ -37,7 +70,7 @@ int	main(int argc, char **argv)
 	t_stack	*stack_b;
 	t_stack	*temp;
 
-	/*1) Check if there is one argument (at least), 
+	/*1) Check if thedre is one argument (at least), 
 	if there is no arguments return 0.*/
 	if (argc < 2)
 		return (0);
@@ -114,8 +147,9 @@ int	main(int argc, char **argv)
 		temp = temp->next;
 	}
 	printf("\n");
+	printf("===================| MOVIMENTS |=================\n");
 
-	ft_push_swap(&stack_a, &stack_b);
+	ft_push_swap(&stack_a, &stack_b, size_a);
 	//PRINTING THE STACK AFTER THE OPERATIONS!:
 	printf("====================| AFTER |=====================\n");
 	temp = stack_a;

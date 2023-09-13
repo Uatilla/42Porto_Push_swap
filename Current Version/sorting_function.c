@@ -55,11 +55,20 @@ static void	do_swap(t_stack **stack_push)
 void	do_sa(t_stack **stack_a)
 {
 	do_swap(&*stack_a);
+	ft_putstr_fd("sa\n", 1);
 }
 
 void	do_sb(t_stack **stack_b)
 {
 	do_swap(&*stack_b);
+	ft_putstr_fd("sb\n", 1);
+}
+
+void	do_ss(t_stack **stack_a, t_stack **stack_b)
+{
+	do_swap(&*stack_a);
+	do_swap(&*stack_b);
+	ft_putstr_fd("ss\n", 1);
 }
 
 /*static void	do_push(t_stack **src, t_stack **dest)
@@ -124,11 +133,13 @@ static void	do_push(t_stack **src, t_stack **dest)
 void	do_pa(t_stack **stack_b, t_stack **stack_a)
 {
 	do_push(&*stack_b, &*stack_a);
+	ft_putstr_fd("pa\n", 1);
 }
 
 void	do_pb(t_stack **stack_a, t_stack **stack_b)
 {
 	do_push(&*stack_a, &*stack_b);
+	ft_putstr_fd("pb\n", 1);
 }
 
 static void	do_rotate(t_stack **src)
@@ -142,17 +153,20 @@ static void	do_rotate(t_stack **src)
 void	do_ra(t_stack **stack_a)
 {
 	do_rotate(&*stack_a);
+	ft_putstr_fd("ra\n", 1);
 }
 
 void	do_rb(t_stack **stack_b)
 {
 	do_rotate(&*stack_b);
+	ft_putstr_fd("rb\n", 1);
 }
 
 void	do_rr(t_stack **stack_a, t_stack **stack_b)
 {
 	do_rotate(&*stack_a);
 	do_rotate(&*stack_b);
+	ft_putstr_fd("rr\n", 1);
 }
 
 static void	do_rev_rotate(t_stack **src)
@@ -165,15 +179,18 @@ static void	do_rev_rotate(t_stack **src)
 void	do_rra(t_stack	**stack_a)
 {
 	do_rev_rotate(&*stack_a);
+	ft_putstr_fd("rra\n", 1);
 }
 
 void	do_rrb(t_stack	**stack_b)
 {
 	do_rev_rotate(&*stack_b);
+	ft_putstr_fd("rrb\n", 1);
 }
 
 void	do_rrr(t_stack	**stack_a, t_stack **stack_b)
 {
 	do_rev_rotate(&*stack_a);
 	do_rev_rotate(&*stack_b);
+	ft_putstr_fd("rrr\n", 1);
 }
