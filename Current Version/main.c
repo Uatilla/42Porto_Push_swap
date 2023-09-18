@@ -6,42 +6,37 @@
 /*   By: uatilla <uatilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 18:47:31 by uviana-a          #+#    #+#             */
-/*   Updated: 2023/09/12 09:01:03 by uatilla          ###   ########.fr       */
+/*   Updated: 2023/09/18 22:45:25 by uatilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_five(t_stack **stack_a, t_stack **stack_b)
+void	setting_current_pos(t_stack **stack_a, t_stack **stack_b)
 {
-	int	idx_to_move;
+	t_stack	*head;
+	int	trigger;
+	int	i;
 
-	idx_to_move = 1;
-	if (ft_is_sorted(*stack_a))
-		return ;
-	if ((*stack_a)->index == idx_to_move)
+	head = *stack_a;
+	trigger = 1;
+	i = 1;
+	while (head != *stack_a || trigger == 1)
 	{
-		do_pb(stack_a, stack_b);
-		idx_to_move = 2;
+		trigger = 0;
+		head->pos_a = i;
+		head = head->next;
+		i++;
 	}
-	else if((*stack_a)->prev->index == idx_to_move)
-		do_rra(stack_a);
-	else if((*stack_a)->prev->prev->index == idx_to_move)
-	{
-		do_rra(stack_a);
-		do_rra(stack_a);
-	}
+}
+
+void	sort_over_five(t_stack **stack_a, t_stack **stack_b)
+{
+	do_pb(stack_a, stack_b);
+	do_pb(stack_a, stack_b);
+	setting_current_pos(&*stack_a, &*stack_b); //I NEED TO SET THE CURRENT POSITION OF THE NODE.
 	
-	while (idx_to_move <= 2)
-	{
-		while ((*stack_a)->index != idx_to_move)
-			do_ra(stack_a);
-		do_pb(stack_a, stack_b);
-		idx_to_move++;
-	}
-	sort_three(stack_a);
-	do_pa(stack_b, stack_a);
-	do_pa(stack_b, stack_a);
+	
 }
 
 void	ft_push_swap(t_stack **stack_a, t_stack **stack_b, int size_stack)
@@ -52,8 +47,11 @@ void	ft_push_swap(t_stack **stack_a, t_stack **stack_b, int size_stack)
 		sort_three(stack_a);
 	else if (size_stack == 4)
 		sort_four(stack_a, stack_b);
+		//On Sort_five I have to improve it to be able to solve the task with only 8 moves.
 	else if (size_stack == 5)
 		sort_five(stack_a, stack_b);
+	else
+		sort_over_five(stack_a, stack_b);
 
 }
 
@@ -129,7 +127,7 @@ int	main(int argc, char **argv)
 	while (temp && (temp != stack_a || trigger == 1))
 	{
 		trigger = 0;
-		printf("%d\t", temp->value);
+		printf("%d pos_a[%d]\t", temp->value, temp->pos_a);
 		temp = temp->next;
 	}
 	printf("\n");
@@ -139,7 +137,7 @@ int	main(int argc, char **argv)
 	while (temp && (temp != stack_b || trigger == 1))
 	{
 		trigger = 0;
-		printf("%d\t", temp->value);
+		printf("%d pos_b[%d]\t", temp->value, temp->pos_b);
 		temp = temp->next;
 	}
 	printf("\n");
@@ -154,7 +152,7 @@ int	main(int argc, char **argv)
 	while (temp && (temp != stack_a || trigger == 1))
 	{
 		trigger = 0;
-		printf("%d\t", temp->value);
+		printf("%d pos_a[%d]\t", temp->value, temp->pos_a);
 		temp = temp->next;
 	}
 	printf("\n");
@@ -164,7 +162,7 @@ int	main(int argc, char **argv)
 	while (temp && (temp != stack_b || trigger == 1))
 	{
 		trigger = 0;
-		printf("%d\t", temp->value);
+		printf("%d pos_b[%d]\t", temp->value, temp->pos_b);
 		temp = temp->next;
 	}
 	printf("\n");

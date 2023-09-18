@@ -6,7 +6,7 @@
 /*   By: uatilla <uatilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:03:53 by uviana-a          #+#    #+#             */
-/*   Updated: 2023/09/12 08:59:22 by uatilla          ###   ########.fr       */
+/*   Updated: 2023/09/18 21:21:18 by uatilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ typedef struct s_push
 {
 	int		value;
 	int		index;
-	int		head;
+	int		pos_a;
+	int		pos_b;
 	struct s_push	*next;
 	struct s_push	*prev;
 }	t_stack;
@@ -93,6 +94,8 @@ void	do_rrr(t_stack	**stack_a, t_stack **stack_b);
 void	sort_three(t_stack **stack);
 
 void	sort_four(t_stack **stack_a, t_stack **stack_b);
+
+void	sort_five(t_stack **stack_a, t_stack **stack_b);
 
 int	ft_find_highest_index(t_stack **stack);
 

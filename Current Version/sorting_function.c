@@ -6,7 +6,7 @@
 /*   By: uatilla <uatilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:24:13 by uviana-a          #+#    #+#             */
-/*   Updated: 2023/09/12 08:57:10 by uatilla          ###   ########.fr       */
+/*   Updated: 2023/09/18 21:21:06 by uatilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,5 +249,37 @@ void	sort_four(t_stack **stack_a, t_stack **stack_b)
 			do_ra(stack_a);
 	do_pb(stack_a, stack_b);
 	sort_three(stack_a);
+	do_pa(stack_b, stack_a);
+}
+
+void	sort_five(t_stack **stack_a, t_stack **stack_b)
+{
+	int	idx_to_move;
+
+	idx_to_move = 1;
+	if (ft_is_sorted(*stack_a))
+		return ;
+	if ((*stack_a)->index == idx_to_move)
+	{
+		do_pb(stack_a, stack_b);
+		idx_to_move = 2;
+	}
+	else if((*stack_a)->prev->index == idx_to_move)
+		do_rra(stack_a);
+	else if((*stack_a)->prev->prev->index == idx_to_move)
+	{
+		do_rra(stack_a);
+		do_rra(stack_a);
+	}
+	
+	while (idx_to_move <= 2)
+	{
+		while ((*stack_a)->index != idx_to_move)
+			do_ra(stack_a);
+		do_pb(stack_a, stack_b);
+		idx_to_move++;
+	}
+	sort_three(stack_a);
+	do_pa(stack_b, stack_a);
 	do_pa(stack_b, stack_a);
 }
