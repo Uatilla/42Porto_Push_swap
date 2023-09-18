@@ -194,3 +194,60 @@ void	do_rrr(t_stack	**stack_a, t_stack **stack_b)
 	do_rev_rotate(&*stack_b);
 	ft_putstr_fd("rrr\n", 1);
 }
+
+int	ft_find_highest_index(t_stack **stack)
+{
+	t_stack *temp;
+	int	highest_index;
+	int	trigger;
+
+	temp = *stack;
+	trigger = 1;
+	if (!temp)
+		return (0);
+	while (temp && (temp != *stack || trigger == 1))
+	{
+		trigger = 0;
+		if (temp == *stack)
+			highest_index = temp->index;
+		else if (highest_index < temp->index)
+		{
+			highest_index = temp->index;
+		}
+		temp = temp->next;
+
+	}
+	//printf("Highest Index: %d\n",highest_index);
+	return (highest_index);
+}
+
+void	sort_three(t_stack **stack)
+{
+	int	highest_index;
+
+	highest_index = ft_find_highest_index(stack);
+	if (ft_is_sorted(*stack))
+		return ;
+	if ((*stack)->index == highest_index)
+		do_ra(stack);
+	else if ((*stack)->next->index == highest_index)
+		do_rra(stack);
+	if ((*stack)->index > (*stack)->next->index)
+		do_sa(stack);
+}
+
+void	sort_four(t_stack **stack_a, t_stack **stack_b)
+{
+	if (ft_is_sorted(*stack_a))
+		return ;
+	if ((*stack_a)->index == 1)
+		do_pb(stack_a, stack_b);
+	else if ((*stack_a)->prev->index == 1)
+		do_rra(stack_a);
+	else
+		while ((*stack_a)->index != 1)
+			do_ra(stack_a);
+	do_pb(stack_a, stack_b);
+	sort_three(stack_a);
+	do_pa(stack_b, stack_a);
+}

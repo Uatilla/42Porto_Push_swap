@@ -12,53 +12,49 @@
 
 #include "push_swap.h"
 
-int	ft_find_highest_index(t_stack **stack)
+void	sort_five(t_stack **stack_a, t_stack **stack_b)
 {
-	t_stack *temp;
-	int	highest_index;
-	int	trigger;
+	int	idx_to_move;
 
-	temp = *stack;
-	trigger = 1;
-	if (!temp)
-		return (0);
-	while (temp && (temp != *stack || trigger == 1))
-	{
-		trigger = 0;
-		if (temp == *stack)
-			highest_index = temp->index;
-		else if (highest_index < temp->index)
-		{
-			highest_index = temp->index;
-		}
-		temp = temp->next;
-
-	}
-	printf("Highest Index: %d\n",highest_index);
-	return (highest_index);
-}
-
-void	sort_three(t_stack **stack)
-{
-	int	highest_index;
-
-	highest_index = ft_find_highest_index(stack);
-	if (ft_is_sorted(*stack))
+	idx_to_move = 1;
+	if (ft_is_sorted(*stack_a))
 		return ;
-	if ((*stack)->index == highest_index)
-		do_ra(stack);
-	else if ((*stack)->next->index == highest_index)
-		do_rra(stack);
-	if ((*stack)->index > (*stack)->next->index)
-		do_sa(stack);
+	if ((*stack_a)->index == idx_to_move)
+	{
+		do_pb(stack_a, stack_b);
+		idx_to_move = 2;
+	}
+	else if((*stack_a)->prev->index == idx_to_move)
+		do_rra(stack_a);
+	else if((*stack_a)->prev->prev->index == idx_to_move)
+	{
+		do_rra(stack_a);
+		do_rra(stack_a);
+	}
+	
+	while (idx_to_move <= 2)
+	{
+		while ((*stack_a)->index != idx_to_move)
+			do_ra(stack_a);
+		do_pb(stack_a, stack_b);
+		idx_to_move++;
+	}
+	sort_three(stack_a);
+	do_pa(stack_b, stack_a);
+	do_pa(stack_b, stack_a);
 }
+
 void	ft_push_swap(t_stack **stack_a, t_stack **stack_b, int size_stack)
 {
 	if (size_stack == 2 && !ft_is_sorted(*stack_a))
 		do_sa(stack_a);
 	else if (size_stack == 3)
 		sort_three(stack_a);
-	
+	else if (size_stack == 4)
+		sort_four(stack_a, stack_b);
+	else if (size_stack == 5)
+		sort_five(stack_a, stack_b);
+
 }
 
 int	main(int argc, char **argv)

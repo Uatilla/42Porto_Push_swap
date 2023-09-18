@@ -88,6 +88,14 @@ void	do_rrb(t_stack	**stack_b);
 
 void	do_rrr(t_stack	**stack_a, t_stack **stack_b);
 
+//ALGOR FUNCTIONS:********************************************************
+
+void	sort_three(t_stack **stack);
+
+void	sort_four(t_stack **stack_a, t_stack **stack_b);
+
+int	ft_find_highest_index(t_stack **stack);
+
 //UTILS FUNCTIONS:********************************************************
 
 void	ft_putstr_fd(char *s, int fd);
