@@ -26,8 +26,8 @@ typedef struct s_push
 {
 	int		value;
 	int		index;
-	int		pos_a;
-	int		pos_b;
+	int		pos;
+	int		cost;
 	struct s_push	*next;
 	struct s_push	*prev;
 }	t_stack;

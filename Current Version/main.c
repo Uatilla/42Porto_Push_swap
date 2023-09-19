@@ -12,30 +12,76 @@
 
 #include "push_swap.h"
 
-void	setting_current_pos(t_stack **stack_a, t_stack **stack_b)
+void	setting_costs(t_stack **stack, int size)
+{
+	t_stack	*temp;
+
+	temp = *stack;
+	if (size % 2 == 0)
+	{
+		while (temp->pos <= size/2)
+		{
+			temp->cost = temp->pos - 1;
+			temp = temp->next;
+		}
+		while (temp->pos > size/2)
+		{
+			temp->cost = size - temp->pos + 1;
+			temp = temp->next;
+		}
+	}
+	else
+	{
+		while (temp->pos <= (size/2) + 1)
+		{
+			temp->cost = temp->pos - 1;
+			temp = temp->next;
+		}
+		while (temp->pos > (size/2) + 1)
+		{
+			temp->cost = size - temp->pos + 1;
+			temp = temp->next;
+		}
+	}
+}
+//DISCOVER A WAY TO SIMPLIFY THIS CODE!
+void	setting_current_pos(t_stack **stack)
 {
 	t_stack	*head;
 	int	trigger;
 	int	i;
 
-	head = *stack_a;
+	head = *stack;
 	trigger = 1;
-	i = 1;
-	while (head != *stack_a || trigger == 1)
+	i = 0;
+	while (++i && (head != *stack || trigger == 1))
 	{
 		trigger = 0;
-		head->pos_a = i;
+		head->pos = i;
 		head = head->next;
-		i++;
 	}
 }
 
 void	sort_over_five(t_stack **stack_a, t_stack **stack_b)
 {
+	int	size_a;
+	int	size_b;
+
 	do_pb(stack_a, stack_b);
 	do_pb(stack_a, stack_b);
-	setting_current_pos(&*stack_a, &*stack_b); //I NEED TO SET THE CURRENT POSITION OF THE NODE.
+	setting_current_pos(stack_a);
+	setting_current_pos(stack_b);
+	size_a = ft_size_stack(*stack_a);
+	size_b = ft_size_stack(*stack_b);
+	printf("Size_a: %d Size_b: %d\n", (size_a/2)+1, size_b);
+	setting_costs(stack_a, size_a);
+	setting_costs(stack_b, size_b);
+
+
+
+
 	
+	//IT'S MISSING THE COST TO SET THE RIGHT POSITION ON STACK_B!
 	
 }
 
@@ -123,21 +169,26 @@ int	main(int argc, char **argv)
 	printf("====================| BEFORE |====================\n");
 	temp = stack_a;
 	trigger = 1;
-	ft_putstr_fd("STACK_A:   ", 1);
+	ft_putstr_fd("STACK_A:\n", 1);
+	printf("Value:\tIndex:\tPos:\tCost_top:\n");
 	while (temp && (temp != stack_a || trigger == 1))
 	{
 		trigger = 0;
-		printf("%d pos_a[%d]\t", temp->value, temp->pos_a);
+		printf("%d\t[%d]\t[%d]\t[%d]\n", temp->value, temp->index, temp->pos, temp->cost);
+
 		temp = temp->next;
 	}
 	printf("\n");
 	temp = stack_b;
 	trigger = 1;
-	printf("STACK_B:   ");
+	printf("STACK_B:\n");
+	printf("Value:\tIndex:\tPos:\tCost_top:\n");
 	while (temp && (temp != stack_b || trigger == 1))
 	{
 		trigger = 0;
-		printf("%d pos_b[%d]\t", temp->value, temp->pos_b);
+		printf("%d\t[%d]\t[%d]\t[%d]\n", temp->value, temp->index, temp->pos, temp->cost);
+
+
 		temp = temp->next;
 	}
 	printf("\n");
@@ -148,21 +199,26 @@ int	main(int argc, char **argv)
 	printf("====================| AFTER |=====================\n");
 	temp = stack_a;
 	trigger = 1;
-	printf("STACK_A:   ");
+	printf("STACK_A:\n");
+	printf("Value:\tIndex:\tPos:\tCost_top:\n");
 	while (temp && (temp != stack_a || trigger == 1))
 	{
 		trigger = 0;
-		printf("%d pos_a[%d]\t", temp->value, temp->pos_a);
+		printf("%d\t[%d]\t[%d]\t[%d]\n", temp->value, temp->index, temp->pos, temp->cost);
+
 		temp = temp->next;
 	}
 	printf("\n");
 	temp = stack_b;
 	trigger = 1;
-	printf("STACK_B:   ");
+	printf("STACK_B:\n");
+	printf("Value:\tIndex:\tPos:\tCost_top:\n");
 	while (temp && (temp != stack_b || trigger == 1))
 	{
 		trigger = 0;
-		printf("%d pos_b[%d]\t", temp->value, temp->pos_b);
+		printf("%d\t[%d]\t[%d]\t[%d]\n", temp->value, temp->index, temp->pos, temp->cost);
+
+
 		temp = temp->next;
 	}
 	printf("\n");
