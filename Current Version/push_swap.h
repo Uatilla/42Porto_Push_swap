@@ -27,7 +27,10 @@ typedef struct s_push
 	int		value;
 	int		index;
 	int		pos;
-	int		cost;
+	int		cost_rr;
+	int		cost_rrr;
+	int		global_cost_rr;
+	int		global_cost_rrr;
 	struct s_push	*next;
 	struct s_push	*prev;
 }	t_stack;
@@ -97,7 +100,7 @@ void	sort_four(t_stack **stack_a, t_stack **stack_b);
 
 void	sort_five(t_stack **stack_a, t_stack **stack_b);
 
-int	ft_find_highest_index(t_stack **stack);
+int	ft_find_index(t_stack **stack, char search);
 
 //UTILS FUNCTIONS:********************************************************
 

@@ -12,6 +12,57 @@
 
 #include "push_swap.h"
 
+void	setting_position_costs(t_stack **stack_a, t_stack **stack_b, int size_a, int size_b)
+{
+	int	trigger;
+	int	highest_index;
+	int	lowest_index;
+	t_stack *temp_a;
+	t_stack	*temp_b;
+	int	i;
+	int	j;
+
+	highest_index = ft_find_index(stack_b, 'H');
+	lowest_index = ft_find_index(stack_b, 'L');
+	temp_a = *stack_a;
+	temp_b = *stack_b;
+	while (temp_b->index != highest_index)
+		temp_b = temp_b->next;
+	trigger = 1;
+	i = 0;
+	while (trigger == 1 || i < size_a)
+	{
+		trigger = 0;
+		if (temp_a->index > highest_index)
+		{
+			temp_a->global_cost_rr = temp_b->cost_rr;
+			temp_a->global_cost_rrr = temp_b->cost_rrr;
+		}
+		else if (temp_a->index < lowest_index)
+		{
+			temp_a->global_cost_rr = temp_b->cost_rr;
+			temp_a->global_cost_rrr = temp_b->cost_rrr;
+		}
+		else
+		{
+			j = 0;
+			while (j < size_b)
+			{
+				if (temp_a->index < temp_b->index && temp_a->index > temp_b->prev->index)
+				{
+					temp_a->global_cost_rr = temp_b->cost_rr;
+					temp_a->global_cost_rrr = temp_b->cost_rrr;
+				}
+				temp_b = temp_b->next;
+				j++;
+			}
+		}
+			
+		temp_a = temp_a->next;
+		i++;
+	}
+}
+
 void	setting_costs(t_stack **stack, int size)
 {
 	t_stack	*temp;
@@ -21,12 +72,12 @@ void	setting_costs(t_stack **stack, int size)
 	{
 		while (temp->pos <= size/2)
 		{
-			temp->cost = temp->pos - 1;
+			temp->cost_rr = temp->pos - 1;
 			temp = temp->next;
 		}
 		while (temp->pos > size/2)
 		{
-			temp->cost = size - temp->pos + 1;
+			temp->cost_rrr = size - temp->pos + 1;
 			temp = temp->next;
 		}
 	}
@@ -34,17 +85,17 @@ void	setting_costs(t_stack **stack, int size)
 	{
 		while (temp->pos <= (size/2) + 1)
 		{
-			temp->cost = temp->pos - 1;
+			temp->cost_rr = temp->pos - 1;
 			temp = temp->next;
 		}
 		while (temp->pos > (size/2) + 1)
 		{
-			temp->cost = size - temp->pos + 1;
+			temp->cost_rrr = size - temp->pos + 1;
 			temp = temp->next;
 		}
 	}
 }
-//DISCOVER A WAY TO SIMPLIFY THIS CODE!
+
 void	setting_current_pos(t_stack **stack)
 {
 	t_stack	*head;
@@ -69,6 +120,9 @@ void	sort_over_five(t_stack **stack_a, t_stack **stack_b)
 
 	do_pb(stack_a, stack_b);
 	do_pb(stack_a, stack_b);
+	//do_pb(stack_a, stack_b);
+	//do_pb(stack_a, stack_b);
+	//do_pb(stack_a, stack_b);
 	setting_current_pos(stack_a);
 	setting_current_pos(stack_b);
 	size_a = ft_size_stack(*stack_a);
@@ -76,12 +130,10 @@ void	sort_over_five(t_stack **stack_a, t_stack **stack_b)
 	printf("Size_a: %d Size_b: %d\n", (size_a/2)+1, size_b);
 	setting_costs(stack_a, size_a);
 	setting_costs(stack_b, size_b);
+	setting_position_costs(stack_a, stack_b, size_a, size_b);
 
-
-
-
-	
-	//IT'S MISSING THE COST TO SET THE RIGHT POSITION ON STACK_B!
+	/*HOW TO cHOOSE THE RIGHT NUMBER TO ROTATE:
+		* Consider that you can rotate two stacks at once.*/
 	
 }
 
@@ -170,25 +222,22 @@ int	main(int argc, char **argv)
 	temp = stack_a;
 	trigger = 1;
 	ft_putstr_fd("STACK_A:\n", 1);
-	printf("Value:\tIndex:\tPos:\tCost_top:\n");
+	printf("Value:\tIndex:\tPos:\tRA\tRRA:\tRB:\tRRB:\n");
 	while (temp && (temp != stack_a || trigger == 1))
 	{
 		trigger = 0;
-		printf("%d\t[%d]\t[%d]\t[%d]\n", temp->value, temp->index, temp->pos, temp->cost);
-
+		printf("%d\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\n", temp->value, temp->index, temp->pos, temp->cost_rr, temp->cost_rrr, temp->global_cost_rr, temp->global_cost_rrr);
 		temp = temp->next;
 	}
 	printf("\n");
 	temp = stack_b;
 	trigger = 1;
 	printf("STACK_B:\n");
-	printf("Value:\tIndex:\tPos:\tCost_top:\n");
+	printf("Value:\tIndex:\tPos:\tRA\tRRA:\tRB:\tRRB:\n");
 	while (temp && (temp != stack_b || trigger == 1))
 	{
 		trigger = 0;
-		printf("%d\t[%d]\t[%d]\t[%d]\n", temp->value, temp->index, temp->pos, temp->cost);
-
-
+		printf("%d\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\n", temp->value, temp->index, temp->pos, temp->cost_rr, temp->cost_rrr, temp->global_cost_rr, temp->global_cost_rrr);
 		temp = temp->next;
 	}
 	printf("\n");
@@ -200,25 +249,22 @@ int	main(int argc, char **argv)
 	temp = stack_a;
 	trigger = 1;
 	printf("STACK_A:\n");
-	printf("Value:\tIndex:\tPos:\tCost_top:\n");
+	printf("Value:\tIndex:\tPos:\tRA\tRRA:\tRB:\tRRB:\n");
 	while (temp && (temp != stack_a || trigger == 1))
 	{
 		trigger = 0;
-		printf("%d\t[%d]\t[%d]\t[%d]\n", temp->value, temp->index, temp->pos, temp->cost);
-
+		printf("%d\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\n", temp->value, temp->index, temp->pos, temp->cost_rr, temp->cost_rrr, temp->global_cost_rr, temp->global_cost_rrr);
 		temp = temp->next;
 	}
 	printf("\n");
 	temp = stack_b;
 	trigger = 1;
 	printf("STACK_B:\n");
-	printf("Value:\tIndex:\tPos:\tCost_top:\n");
+	printf("Value:\tIndex:\tPos:\tRA\tRRA:\tRB:\tRRB:\n");
 	while (temp && (temp != stack_b || trigger == 1))
 	{
 		trigger = 0;
-		printf("%d\t[%d]\t[%d]\t[%d]\n", temp->value, temp->index, temp->pos, temp->cost);
-
-
+		printf("%d\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\t[%d]\n", temp->value, temp->index, temp->pos, temp->cost_rr, temp->cost_rrr, temp->global_cost_rr, temp->global_cost_rrr);
 		temp = temp->next;
 	}
 	printf("\n");

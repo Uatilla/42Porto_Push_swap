@@ -195,10 +195,10 @@ void	do_rrr(t_stack	**stack_a, t_stack **stack_b)
 	ft_putstr_fd("rrr\n", 1);
 }
 
-int	ft_find_highest_index(t_stack **stack)
+int	ft_find_index(t_stack **stack, char search)
 {
 	t_stack *temp;
-	int	highest_index;
+	int	search_index;
 	int	trigger;
 
 	temp = *stack;
@@ -209,23 +209,30 @@ int	ft_find_highest_index(t_stack **stack)
 	{
 		trigger = 0;
 		if (temp == *stack)
-			highest_index = temp->index;
-		else if (highest_index < temp->index)
+			search_index = temp->index;
+		if (search == 'H')
 		{
-			highest_index = temp->index;
+			if (search_index < temp->index)
+				search_index = temp->index;
+			temp = temp->next;
 		}
-		temp = temp->next;
+		if (search == 'L')
+		{
+			if (search_index > temp->index)
+				search_index = temp->index;
+			temp = temp->next;
+		}
 
 	}
 	//printf("Highest Index: %d\n",highest_index);
-	return (highest_index);
+	return (search_index);
 }
 
 void	sort_three(t_stack **stack)
 {
 	int	highest_index;
 
-	highest_index = ft_find_highest_index(stack);
+	highest_index = ft_find_index(stack, 'H');
 	if (ft_is_sorted(*stack))
 		return ;
 	if ((*stack)->index == highest_index)
