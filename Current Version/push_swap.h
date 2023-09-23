@@ -27,10 +27,13 @@ typedef struct s_push
 	int		value;
 	int		index;
 	int		pos;
-	int		cost_rr;
-	int		cost_rrr;
-	int		global_cost_rr;
-	int		global_cost_rrr;
+	int		ra;
+	int		rra;
+	int		rb;
+	int		rrb;
+	int		rr;
+	int		rrr;
+	int		total;
 	struct s_push	*next;
 	struct s_push	*prev;
 }	t_stack;
