@@ -36,6 +36,8 @@ int ft_size_stack(t_stack *stack)
 	temp = stack;
 	trigger = 1;
 	i = 0;
+	if (!temp)
+		return (0);
 	while (temp && (temp != stack || trigger == 1))
 	{
 		trigger = 0;

@@ -53,7 +53,7 @@ t_stack	*find_prev_index(t_stack **stack_b, int index)
 	}
 }
 
-void	setting_position_costs(t_stack **stack_a, t_stack **stack_b, int size_a, int size_b)
+void	setting_position_costs(t_stack **src, t_stack **dest, int size_a, int size_b)
 {
 	int	trigger;
 	int	highest_index;
@@ -63,10 +63,10 @@ void	setting_position_costs(t_stack **stack_a, t_stack **stack_b, int size_a, in
 	int	i;
 	int	j;
 
-	highest_index = ft_find_index(stack_b, 'H');
-	lowest_index = ft_find_index(stack_b, 'L');
-	temp_a = *stack_a;
-	temp_b = *stack_b;
+	highest_index = ft_find_index(dest, 'H');
+	lowest_index = ft_find_index(dest, 'L');
+	temp_a = *src;
+	temp_b = *dest;
 	while (temp_b->index != highest_index)
 		temp_b = temp_b->next;
 	trigger = 1;
@@ -154,15 +154,15 @@ void	setting_current_pos(t_stack **stack)
 	}
 }
 
-void	ft_id_best_cost(t_stack **stack_a, t_stack **stack_b)
+void	ft_id_best_cost(t_stack **stack)
 {
 	t_stack	*temp_a;
 	t_stack	*best_cost;
 	int	size_a;
 	int	i;
 
-	temp_a = *stack_a;
-	size_a = ft_size_stack(*stack_a);
+	temp_a = *stack;
+	size_a = ft_size_stack(*stack);
 	i = 0;
 	while (i < size_a)
 	{
@@ -216,11 +216,12 @@ t_stack	*ft_lowest_cost(t_stack **stack_a)
 
 	temp = *stack_a;
 	
-	i = 0;
+	i = -1;
 	size_a = ft_size_stack(*stack_a);
 	j = 0;
-	while (j < size_a)
+	while (temp->total != i)
 	{
+		i++;
 		trigger = 1;
 		while (temp->total != i && (trigger == 1 || temp != *stack_a))
 		{
@@ -229,8 +230,6 @@ t_stack	*ft_lowest_cost(t_stack **stack_a)
 		}
 			if (temp->total == i)
 				return (temp);
-		i++;
-		j++;
 	}
 	return (0);
 }
@@ -302,6 +301,36 @@ void	ft_print(t_stack **stack_a, t_stack **stack_b)
 	printf("\n");
 }
 
+void	return_to_stack_a(t_stack **src, t_stack **dest)
+{
+	t_stack	*temp_a;
+	t_stack	*temp_b;
+	int		size_a;
+	int		size_b;
+	int			i;
+
+	temp_a = *dest;
+	temp_b = *src;
+
+	size_b = ft_size_stack(temp_b);
+	i = size_b;
+	printf("SIZE: %d\n", size_b);
+	while (size_b != 0)
+	{
+		if (temp_b->index < temp_a->index && temp_b->index > temp_a->prev->index)
+		{
+			//REVER A FUNCAO PA
+			do_pa(&temp_b, &temp_a);
+			size_b = ft_size_stack(temp_b);	
+		}
+		//corrigir para considerar tanto o ra quanto o rra
+		else
+			do_ra(&temp_a);
+		//printf("SIZE_A: %d, SIZE_B: %d\n", ft_size_stack(temp_a), ft_size_stack(temp_b));
+		i--;
+	}
+}
+
 void	sort_over_five(t_stack **stack_a, t_stack **stack_b)
 {
 	int	size_a;
@@ -317,7 +346,7 @@ void	sort_over_five(t_stack **stack_a, t_stack **stack_b)
 	//do_pb(stack_a, stack_b);
 	//do_pb(stack_a, stack_b);
 	size_a = ft_size_stack(*stack_a);
-	while (size_a >= 3)
+	while (size_a >= 4)
 	{
 		setting_current_pos(stack_a);
 		setting_current_pos(stack_b);
@@ -326,22 +355,35 @@ void	sort_over_five(t_stack **stack_a, t_stack **stack_b)
 		setting_costs(stack_a, size_a);
 		setting_costs(stack_b, size_b);
 		setting_position_costs(stack_a, stack_b, size_a, size_b);
-		ft_id_best_cost(stack_a, stack_b);
+		ft_id_best_cost(stack_a);
 		set_total_cost(stack_a);
 		temp = ft_lowest_cost(stack_a);
-		printf("Lowest_cost: %d\n", temp->index);
-		ft_print(stack_a, stack_b);
+		if (!temp)
+		{
+			printf("Erro em encontrar o custo menor!\n");
+			ft_print(stack_a, stack_b);
+		}
+		else
+		{
+			//printf("Lowest_cost: %d\n", temp->index);
+			//ft_print(stack_a, stack_b);
+		}
 		do_operations(stack_a, stack_b, temp);
 		size_a = ft_size_stack(*stack_a);
+		
 	}
-	
 
+	sort_three(stack_a);
+	do_rra(stack_a);
+
+	ft_print(stack_a, stack_b);
+	return_to_stack_a(stack_b, stack_a);
 
 	//DO THE OPERATIONS	
 	ft_print(stack_a, stack_b);
 	
 	
-	printf("Size_a: %d Size_b: %d\n", size_a, size_b);
+	//printf("Size_a: %d Size_b: %d\n", size_a, size_b);
 
 }
 
