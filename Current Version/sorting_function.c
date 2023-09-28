@@ -71,31 +71,6 @@ void	do_ss(t_stack **stack_a, t_stack **stack_b)
 	ft_putstr_fd("ss\n", 1);
 }
 
-/*static void	do_push(t_stack **src, t_stack **dest)
-{
-	t_stack *new_head_src;
-
-	if (*src == NULL)
-		return ;
-	new_head_src = (*src)->next;
-	(*src)->prev->next = new_head_src;
-	new_head_src->prev = (*src)->prev;
-	(*src)->next = *dest;
-	//Setting the prev of the dest.
-	if (*dest == NULL)
-	{
-		(*src)->prev = (*src);
-		(*src)->next = (*src);
-	}
-	else
-		(*src)->prev = (*dest)->prev;
-	if ((*src)->next == *src)
-		*dest = NULL;
-	else
-		*dest = *src;
-	*src = new_head_src;
-}*/
-
 static void	do_push(t_stack **src, t_stack **dest)
 {
 	t_stack *new_head_src;
@@ -195,98 +170,38 @@ void	do_rrr(t_stack	**stack_a, t_stack **stack_b)
 	ft_putstr_fd("rrr\n", 1);
 }
 
-int	ft_find_index(t_stack **stack, char search)
+void	do_operations(t_stack **stack_a, t_stack **stack_b, t_stack *temp)
 {
-	t_stack *temp;
-	int	search_index;
-	int	trigger;
-
-	temp = *stack;
-	trigger = 1;
-	if (!temp)
-		return (0);
-	while (temp && (temp != *stack || trigger == 1))
+	while (temp->ra > 0)
 	{
-		trigger = 0;
-		if (temp == *stack)
-			search_index = temp->index;
-		if (search == 'H')
-		{
-			if (search_index < temp->index)
-				search_index = temp->index;
-			temp = temp->next;
-		}
-		if (search == 'L')
-		{
-			if (search_index > temp->index)
-				search_index = temp->index;
-			temp = temp->next;
-		}
-
+		do_ra(&*stack_a);
+		temp->ra--;
 	}
-	//printf("Highest Index: %d\n",highest_index);
-	return (search_index);
-}
-
-void	sort_three(t_stack **stack)
-{
-	int	highest_index;
-
-	highest_index = ft_find_index(stack, 'H');
-	if (ft_is_sorted(*stack))
-		return ;
-	if ((*stack)->index == highest_index)
-		do_ra(stack);
-	else if ((*stack)->next->index == highest_index)
-		do_rra(stack);
-	if ((*stack)->index > (*stack)->next->index)
-		do_sa(stack);
-}
-
-void	sort_four(t_stack **stack_a, t_stack **stack_b)
-{
-	if (ft_is_sorted(*stack_a))
-		return ;
-	if ((*stack_a)->index == 1)
-		do_pb(stack_a, stack_b);
-	else if ((*stack_a)->prev->index == 1)
-		do_rra(stack_a);
-	else
-		while ((*stack_a)->index != 1)
-			do_ra(stack_a);
-	do_pb(stack_a, stack_b);
-	sort_three(stack_a);
-	do_pa(stack_b, stack_a);
-}
-
-void	sort_five(t_stack **stack_a, t_stack **stack_b)
-{
-	int	idx_to_move;
-
-	idx_to_move = 1;
-	if (ft_is_sorted(*stack_a))
-		return ;
-	if ((*stack_a)->index == idx_to_move)
+	while (temp->rb > 0)
 	{
-		do_pb(stack_a, stack_b);
-		idx_to_move = 2;
+		do_rb(&*stack_b);
+		temp->rb--;
 	}
-	else if((*stack_a)->prev->index == idx_to_move)
-		do_rra(stack_a);
-	else if((*stack_a)->prev->prev->index == idx_to_move)
+	while (temp->rr > 0)
 	{
-		do_rra(stack_a);
-		do_rra(stack_a);
+		do_rr(&*stack_a, &*stack_b);
+		temp->rr--;
 	}
-	
-	while (idx_to_move <= 2)
+	while (temp->rra > 0)
 	{
-		while ((*stack_a)->index != idx_to_move)
-			do_ra(stack_a);
-		do_pb(stack_a, stack_b);
-		idx_to_move++;
+		do_rra(&*stack_a);
+		temp->rra--;
 	}
-	sort_three(stack_a);
-	do_pa(stack_b, stack_a);
-	do_pa(stack_b, stack_a);
+	while (temp->rrb > 0)
+	{
+		do_rrb(&*stack_b);
+		temp->rrb--;
+	}
+
+	while (temp->rrr > 0)
+	{
+		do_rrr(&*stack_a, &*stack_b);
+		temp->rrr--;
+	}
+	do_pb(&*stack_a, &*stack_b);
 }

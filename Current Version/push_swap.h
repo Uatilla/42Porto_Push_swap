@@ -103,6 +103,10 @@ void	sort_four(t_stack **stack_a, t_stack **stack_b);
 
 void	sort_five(t_stack **stack_a, t_stack **stack_b);
 
+void	sort_over_five(t_stack **stack_a, t_stack **stack_b);
+
+void	do_operations(t_stack **stack_a, t_stack **stack_b, t_stack *temp);
+
 int	ft_find_index(t_stack **stack, char search);
 
 //UTILS FUNCTIONS:********************************************************
@@ -113,5 +117,18 @@ int ft_size_stack(t_stack *stack);
 
 # define ERROR_DUPLICATE "KO: Numbers duplicated.\n"
 
+//COSTS FUNCTIONS:********************************************************
+
+void	set_total_cost(t_stack **stack_a);
+
+void	setting_position_costs(t_stack **src, t_stack **dest, int size_a, int size_b);
+
+void	setting_costs(t_stack **stack, int size);
+
+void	setting_current_pos(t_stack **stack);
+
+void	ft_id_best_cost(t_stack **stack);
+
+t_stack	*ft_lowest_cost(t_stack **stack_a);
 
 #endif

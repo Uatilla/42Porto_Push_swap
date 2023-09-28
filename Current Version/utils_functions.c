@@ -46,3 +46,36 @@ int ft_size_stack(t_stack *stack)
 	}
 	return (i);
 }
+
+int	ft_find_index(t_stack **stack, char search)
+{
+	t_stack *temp;
+	int	search_index;
+	int	trigger;
+
+	temp = *stack;
+	trigger = 1;
+	if (!temp)
+		return (0);
+	while (temp && (temp != *stack || trigger == 1))
+	{
+		trigger = 0;
+		if (temp == *stack)
+			search_index = temp->index;
+		if (search == 'H')
+		{
+			if (search_index < temp->index)
+				search_index = temp->index;
+			temp = temp->next;
+		}
+		if (search == 'L')
+		{
+			if (search_index > temp->index)
+				search_index = temp->index;
+			temp = temp->next;
+		}
+
+	}
+	//printf("Highest Index: %d\n",highest_index);
+	return (search_index);
+}
