@@ -14,8 +14,8 @@
 
 void	set_total_cost(t_stack **stack_a)
 {
-	int		size_a;
-	int		i;
+	int	size_a;
+	int	i;
 	t_stack	*temp;
 
 	i = 0;
@@ -132,6 +132,7 @@ void	setting_current_pos(t_stack **stack)
 void	ft_id_best_cost(t_stack **stack)
 {
 	t_stack	*temp_a;
+	t_stack	*best_cost;
 	int	size_a;
 	int	i;
 

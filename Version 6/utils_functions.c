@@ -79,17 +79,3 @@ int	ft_find_index(t_stack **stack, char search)
 	//printf("Highest Index: %d\n",highest_index);
 	return (search_index);
 }
-
-void	ft_clean(t_stack **stack_a)
-{
-	t_stack	*temp;
-
-	while ((*stack_a)->is_freed == 0)
-	{
-		temp = *stack_a;
-		*stack_a = (*stack_a)->next;
-		free(temp);
-		temp->is_freed = 1;
-	}
-	*stack_a = NULL;
-}

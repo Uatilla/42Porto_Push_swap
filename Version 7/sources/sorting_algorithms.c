@@ -122,11 +122,9 @@ void	sort_over_five(t_stack **stack_a, t_stack **stack_b)
 			do_rrb(stack_b);
 	}
 
-	
+
 	//Sending values from stack_b to stack_a
 	temp = (*stack_a)->prev;
-	//printf("=================sending==================\n");
-	//printf("Temp_index: [%d]\n", temp->index);
 	while ((*stack_b) != NULL)
 	{
 		highest_index = ft_find_index(stack_a, 'H');
@@ -134,21 +132,12 @@ void	sort_over_five(t_stack **stack_a, t_stack **stack_b)
 			do_pa(stack_b, stack_a);
 		else if ((*stack_b)->index < temp->index && temp->index != highest_index)
 		{
-			//printf("Temp_index: [%d]\n", temp->index);
 			do_rra(stack_a);
 			temp = temp->prev;
-			//printf("NewTemp_index: [%d] | highest> [%d] | top_a [%d]\n", temp->index, highest_index, (*stack_a)->index);
 		}
-		else if (highest_index == temp->index && ft_size_stack(*stack_a) == 3)
-			{
-				do_rra(stack_a);
-				temp = temp->prev;
-			}
 		else
 			do_pa(stack_b, stack_a);
 		
 	}
-	if (temp->index < (*stack_a)->index)
-		do_rra(stack_a);
-	
+
 }

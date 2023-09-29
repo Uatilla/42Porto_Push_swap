@@ -14,8 +14,8 @@
 
 void	set_total_cost(t_stack **stack_a)
 {
-	int		size_a;
-	int		i;
+	int	size_a;
+	int	i;
 	t_stack	*temp;
 
 	i = 0;

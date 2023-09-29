@@ -12,6 +12,7 @@
 
 #include "push_swap.h"
 
+
 int	ft_checker_input(char **arg_List)
 {
 	int	i;
@@ -85,12 +86,13 @@ int	ft_atoi(const char *nptr)
 //while until all index were done (incrementing i until argc).
 int	ft_linking_nodes(char **argv, t_stack *stack_push)
 {
-	int		i;
-	t_stack	*new_node;
-	t_stack	*linking_nodes;
+	int	i;
+	t_stack *new_node;
+    t_stack	*linking_nodes;
+
 
 	i = 0;
-	while (argv[++i])
+    while (argv[++i])
 	{
 		//3.1) Allocating the first value on the head of the struct.
 		if (i == 1)
@@ -126,14 +128,16 @@ int	ft_linking_nodes(char **argv, t_stack *stack_push)
 		new_node->next = stack_push;
 		stack_push->prev = new_node;
 	}
-	return (1);
+    return (1);
 }
+
+
 
 int	ft_check_nodes_duplicated(t_stack *stack_push)
 {
-	t_stack	*node_a;
-	t_stack	*node_b;
-	int		trigger;
+	t_stack *node_a;
+	t_stack *node_b;
+	int	trigger;
 
 	node_a = stack_push;
 	trigger = 1;
@@ -143,7 +147,7 @@ int	ft_check_nodes_duplicated(t_stack *stack_push)
 	{
 		trigger = 0;
 		node_b = node_a->next;
-		while (node_b != stack_push)
+		while(node_b != stack_push)
 		{
 			if (node_a->value == node_b->value)
 				return (0);
@@ -151,15 +155,16 @@ int	ft_check_nodes_duplicated(t_stack *stack_push)
 		}
 		node_a = node_a->next;
 	}
+
 	return (1);
 }
 
 void	ft_set_index(int argc, t_stack *stack_push)
 {
-	t_stack	*check_index;
-	t_stack	*highest_node;
-	int		current_highest;
-	int		trigger;
+	t_stack *check_index;
+	t_stack *highest_node;
+	int	current_highest;
+	int	trigger;
 
 	if (argc == 2)
 	{
@@ -183,7 +188,7 @@ void	ft_set_index(int argc, t_stack *stack_push)
 				current_highest = check_index->value;
 				highest_node = check_index;
 			}
-			check_index = check_index->next;
+		check_index = check_index->next;
 		}
 		if (highest_node != NULL)
 			highest_node->index = argc;
