@@ -12,37 +12,6 @@
 
 #include "push_swap.h"
 
-void	ft_print(t_stack **stack_a, t_stack **stack_b)
-{
-	t_stack	*temp;
-	int		trigger;
-
-	temp = *stack_a;
-	printf("========================================\n");
-	trigger = 1;
-	printf("STACK_A:\n");
-	printf("Value:\tIndex:\tPos:\t|RA\tRB:\tRR:|\t|RRA:\tRRB:\tRRR:|\tT:\n");
-	while (temp && (temp != *stack_a || trigger == 1))
-	{
-		trigger = 0;
-		printf("%d\t[%d]\t[%d]\t|[%d]\t[%d]\t[%d]|\t|[%d]\t[%d]\t[%d]|\t[%d]\n", temp->value, temp->index, temp->pos, temp->ra, temp->rb, temp->rr, temp->rra, temp->rrb, temp->rrr, temp->total);
-		temp = temp->next;
-	}
-	printf("\n");
-	temp = *stack_b;
-	trigger = 1;
-	printf("STACK_B:\n");
-	printf("Value:\tIndex:\tPos:\t|RA\tRB:\tRR:|\t|RRA:\tRRB:\tRRR:|\tT:\n");
-	while (temp && (temp != *stack_b || trigger == 1))
-	{
-		trigger = 0;
-		printf("%d\t[%d]\t[%d]\t|[%d]\t[%d]\t[%d]|\t|[%d]\t[%d]\t[%d]|\t[%d]\n", temp->value, temp->index, temp->pos, temp->ra, temp->rb, temp->rr, temp->rra, temp->rrb, temp->rrr, temp->total);
-		temp = temp->next;
-	}
-	printf("========================================\n");
-	printf("\n");
-}
-
 void	ft_push_swap(t_stack **stack_a, t_stack **stack_b, int size_stack)
 {
 	if (size_stack == 2 && !ft_is_sorted(*stack_a))
@@ -69,9 +38,10 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		return (0);
 	/*2) Check if the input made is correct (only numbers)*/
+	//argv = ft_split(argv, ' ');
 	if (!ft_checker_input(argv))
 	{
-		//ft_putstr_fd("KO: Arguments invalids\n", 1);
+		ft_putstr_fd("Error\n", 2);
 		return (0);
 	}
 	if (argc == 2)
@@ -83,7 +53,7 @@ int	main(int argc, char **argv)
 		return (0);
 	if (!ft_linking_nodes(argv, stack_a))
 	{
-		//ft_putstr_fd("KO: Couldn't Link the nodes.\n", 1);
+		ft_putstr_fd("Error\n", 2);
 		return (0);
 	}
 	/*4) Check if the values are duplicated only if there is more than 2 arguments passed.*/
@@ -91,7 +61,7 @@ int	main(int argc, char **argv)
 	{
 		if (!ft_check_nodes_duplicated(stack_a))
 		{
-			//ft_putstr_fd(ERROR_DUPLICATE, 1);
+			ft_putstr_fd("Error\n", 2);
 			return (0);
 		}
 	}
@@ -109,6 +79,7 @@ int	main(int argc, char **argv)
 	/*8) Calling the main function to sort the numbers.*/
 	ft_push_swap(&stack_a, &stack_b, size_a);
 	//ft_print(&stack_a, &stack_b);
-	ft_clean(&stack_a);
+	ft_clean(stack_a);
+	//free(stack_a);
 	return (0);
 }

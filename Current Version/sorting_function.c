@@ -56,6 +56,7 @@ void	do_sa(t_stack **stack_a)
 {
 	do_swap(&*stack_a);
 	ft_putstr_fd("sa\n", 1);
+	//printf("sa\n");
 }
 
 void	do_sb(t_stack **stack_b)

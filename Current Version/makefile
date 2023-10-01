@@ -30,11 +30,11 @@ CC	= cc
 RM	= rm -rf
 
 # Flags
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g -O0
 
 # Files
-SRC = 	main.c input_validation.c sorting_algorithms.c \
-		sorting_function.c setting_costs.c utils_functions.c 
+SRC = 	main.c input_validation.c sorting_algorithms.c initializing_stack.c\
+		sorting_function.c setting_costs.c utils_functions.c print.c
 
 OBJS = $(SRC:.c=.o)
 

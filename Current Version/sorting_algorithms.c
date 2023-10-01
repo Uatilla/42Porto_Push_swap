@@ -148,7 +148,12 @@ void	sort_over_five(t_stack **stack_a, t_stack **stack_b)
 			do_pa(stack_b, stack_a);
 		
 	}
-	if (temp->index < (*stack_a)->index)
+	while (temp->index < (*stack_a)->index)
+	{
+		//printf("Temp_index: [%d]\n", temp->index);
 		do_rra(stack_a);
+		//printf("NewTemp_index: [%d] | highest> [%d] | top_a [%d]\n", temp->index, highest_index, (*stack_a)->index);
+		temp = temp->prev;
+	}
 	
 }

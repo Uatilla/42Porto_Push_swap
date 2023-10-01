@@ -112,9 +112,11 @@ int		ft_find_index(t_stack **stack, char search);
 
 //UTILS FUNCTIONS:********************************************************
 
+char	**ft_split(char const *s, char c);
+
 void	ft_putstr_fd(char *s, int fd);
 
-void	ft_clean(t_stack **stack_a);
+void	ft_clean(t_stack *stack_a);
 
 int		ft_size_stack(t_stack *stack);
 
@@ -132,6 +134,8 @@ void	setting_costs(t_stack **stack, int size);
 void	setting_current_pos(t_stack **stack);
 
 void	ft_id_best_cost(t_stack **stack);
+
+void	ft_print(t_stack **stack_a, t_stack **stack_b);
 
 t_stack	*ft_lowest_cost(t_stack **stack_a);
 
