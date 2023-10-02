@@ -26,23 +26,6 @@ void	ft_push_swap(t_stack **stack_a, t_stack **stack_b, int size_stack)
 		sort_over_five(stack_a, stack_b);
 }
 
-int	check_extr_int(t_stack *stack_a)
-{
-	t_stack	*temp;
-	int	trigger;
-
-	trigger = 1;
-	temp = stack_a;
-	while (stack_a != temp || trigger == 1)
-	{
-		trigger = 0;
-		if (temp->value > 2147483647 || temp->value < -2147483648)
-			return (0);
-		temp = temp->next;
-	}
-	return (1);
-}
-
 int	main(int argc, char **argv)
 {
 	int		size_a;
@@ -56,9 +39,7 @@ int	main(int argc, char **argv)
 	if there is no arguments return 0.*/
 	if (argc < 2 || argv[1][0] == '\0')
 	{
-		
 		ft_putstr_fd("Error\n", 2);
-		free(stack_a);
 		return (0);
 	}
 	/*2) Check if the input made is correct (only numbers)*/
@@ -66,38 +47,24 @@ int	main(int argc, char **argv)
 	if (!ft_checker_input(argv))
 	{
 		ft_putstr_fd("Error\n", 2);
-		free(stack_a);
 		return (0);
 	}
 	if (argc == 2)
-	{
-		ft_putstr_fd("Error\n", 2);
-		free(stack_a);
 		return (0);
-	}
-		
 	/*3) Convert the argument into an integer and stores it inside a linked list.*/
 	if (!stack_a)
 		return (0);
 	if (!ft_linking_nodes(argv, stack_a))
 	{
 		ft_putstr_fd("Error\n", 2);
-		ft_clean(stack_a);
 		return (0);
 	}
 	/*4) Check if the values are duplicated only if there is more than 2 arguments passed.*/
-	if (!check_extr_int(stack_a))
-	{
-		ft_putstr_fd("Error\n", 2);
-		ft_clean(stack_a);
-		return (0);
-	}
 	if (argc > 2)
 	{
 		if (!ft_check_nodes_duplicated(stack_a))
 		{
 			ft_putstr_fd("Error\n", 2);
-			ft_clean(stack_a);
 			return (0);
 		}
 	}
@@ -107,7 +74,6 @@ int	main(int argc, char **argv)
 	if (ft_is_sorted (stack_a))
 	{
 		//ft_putstr_fd("OK: Is sorted!\n", 1);
-		ft_clean(stack_a);
 		return (0);
 	}
 	/*7) Defining the size of each stack.*/

@@ -31,8 +31,13 @@ void	sort_four(t_stack **stack_a, t_stack **stack_b)
 {
 	if (ft_is_sorted(*stack_a))
 		return ;
-	while ((*stack_a)->index != 1)
-		do_ra(stack_a);
+	if ((*stack_a)->index == 1)
+		do_pb(stack_a, stack_b);
+	else if ((*stack_a)->prev->index == 1)
+		do_rra(stack_a);
+	else
+		while ((*stack_a)->index != 1)
+			do_ra(stack_a);
 	do_pb(stack_a, stack_b);
 	sort_three(stack_a);
 	do_pa(stack_b, stack_a);
