@@ -12,48 +12,54 @@
 
 #include "push_swap.h"
 
-//I can put the right index here. just need to add a condition to run the
-//while until all index were done (incrementing i until argc).
 void	starting_new_node(t_stack *stack_push, char *argv)
 {
-	stack_push->value = ft_atoi(argv);
+	stack_push->value = (int)ft_atoi(argv);
 	stack_push->index = 0;
 	stack_push->next = NULL;
 	stack_push->prev = NULL;
+}
+
+t_stack	*create_new_node(char *value)
+{
+	t_stack	*new_node;
+
+	new_node = malloc(sizeof(t_stack));
+	if (!new_node)
+		return (NULL);
+	starting_new_node(new_node, value);
+	return (new_node);
+}
+
+void	link_nodes(t_stack *stack_push, t_stack *new_node)
+{
+	t_stack	*linking_nodes;
+
+	linking_nodes = stack_push;
+	while (linking_nodes->next != NULL)
+		linking_nodes = linking_nodes->next;
+	linking_nodes->next = new_node;
+	new_node->prev = linking_nodes;
 }
 
 int	ft_linking_nodes(char **argv, t_stack *stack_push)
 {
 	int		i;
 	t_stack	*new_node;
-	t_stack	*linking_nodes;
 
 	i = 0;
 	while (argv[++i])
 	{
-		//3.1) Allocating the first value on the head of the struct.
 		if (i == 1)
 			starting_new_node(stack_push, argv[i]);
 		else
 		{
-			//3.2) Creating a new node.
-			new_node = malloc(sizeof(t_stack));
-			new_node->is_freed = 0;
+			new_node = create_new_node(argv[i]);
 			if (!new_node)
 				return (0);
-			else
-			{
-				starting_new_node(new_node, argv[i]);
-				//3.3) Linking prev and next of the node created with a pointer.
-				linking_nodes = stack_push;
-				while (linking_nodes->next != NULL)
-					linking_nodes = linking_nodes->next;
-				linking_nodes->next = new_node;
-				new_node->prev = linking_nodes;
-			}
+			link_nodes(stack_push, new_node);
 		}
 	}
-	//3.4) Linking the head and tail to make a double circle linked list.
 	if (new_node)
 	{
 		new_node->next = stack_push;
@@ -70,8 +76,6 @@ int	ft_check_nodes_duplicated(t_stack *stack_push)
 
 	node_a = stack_push;
 	trigger = 1;
-	/*4.1) stack_push is the head, so the checking of duplicated 
-	numbers should run only until stack_push position.*/
 	while (node_a != stack_push || trigger == 1)
 	{
 		trigger = 0;
@@ -83,6 +87,23 @@ int	ft_check_nodes_duplicated(t_stack *stack_push)
 			node_b = node_b->next;
 		}
 		node_a = node_a->next;
+	}
+	return (1);
+}
+
+int	check_extr_int(t_stack *stack_a)
+{
+	t_stack	*temp;
+	int		trigger;
+
+	trigger = 1;
+	temp = stack_a;
+	while (stack_a != temp || trigger == 1)
+	{
+		trigger = 0;
+		if (temp->value > 2147483647 || temp->value < -2147483648)
+			return (0);
+		temp = temp->next;
 	}
 	return (1);
 }
@@ -101,7 +122,6 @@ void	ft_set_index(int argc, t_stack *stack_push)
 	}
 	while (--argc > 0)
 	{
-		/*5.1) Reseting all conference values to verify the next highest number.*/
 		check_index = stack_push;
 		current_highest = INT_MIN;
 		highest_node = NULL;

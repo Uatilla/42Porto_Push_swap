@@ -54,7 +54,7 @@ int		ft_isanumber(char *arg_String);
 
 //CONVERTING INTO INTEGER:************************************************
 
-int		ft_atoi(const char *nptr);
+long long int		ft_atoi(const char *nptr);
 
 //LINKING NODES:**********************************************************
 
@@ -116,9 +116,11 @@ char	**ft_split(char const *s, char c);
 
 void	ft_putstr_fd(char *s, int fd);
 
-void	ft_clean(t_stack *stack_a);
+int	ft_clean(t_stack *stack_a);
 
 int		ft_size_stack(t_stack *stack);
+
+int	check_extr_int(t_stack *stack_a);
 
 # define ERROR_DUPLICATE "KO: Numbers duplicated.\n"
 

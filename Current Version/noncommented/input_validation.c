@@ -19,7 +19,6 @@ int	ft_checker_input(char **arg_List)
 	i = 0;
 	while (arg_List[++i])
 	{
-		/*2.1) Check if the argument is only made of numbers.*/
 		if (!ft_isanumber(arg_List[i]))
 			return (0);
 	}
@@ -38,8 +37,6 @@ int	ft_isdigit(int arg_Char)
 	return (arg_Char >= '0' && arg_Char <= '9');
 }
 
-/*if I change the inside whiled to while (arg_String[++i]) e should 
-change the second while to remove it's i++ too.*/
 int	ft_isanumber(char *arg_String)
 {
 	int	i;
@@ -57,10 +54,10 @@ int	ft_isanumber(char *arg_String)
 	return (1);
 }
 
-int	ft_atoi(const char *nptr)
+long long int	ft_atoi(const char *nptr)
 {
-	int	signal;
-	int	number;
+	int			signal;
+	long int	number;
 
 	signal = 1;
 	number = 0;
