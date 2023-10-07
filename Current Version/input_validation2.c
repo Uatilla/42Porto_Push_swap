@@ -45,7 +45,7 @@ int	check_extr_int(t_stack *stack_a)
 	while (stack_a != temp || trigger == 1)
 	{
 		trigger = 0;
-		if (temp->value < 2147483647 || temp->value > -2147483648)
+		if (temp->value < 2147483647 && temp->value > -2147483648)
 			temp = temp->next;
 		else
 			return (0);
