@@ -115,7 +115,7 @@ int	main(int argc, char **argv)
 	size_b = ft_size_stack(stack_b);
 	/*8) Calling the main function to sort the numbers.*/
 	ft_push_swap(&stack_a, &stack_b, size_a);
-	//ft_print(&stack_a, &stack_b);
+	ft_print(&stack_a, &stack_b);
 	ft_clean(stack_a);
 	//free(stack_a);
 	return (0);

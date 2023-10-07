@@ -92,6 +92,7 @@ int	main(int argc, char **argv)
 	/*9) Calling the main function to sort the numbers.*/
 	ft_push_swap(&stack_a, &stack_b, size_a);
 	ft_clean(stack_a);
+	//ft_print(&stack_a, &stack_b);
 
 	return (0);
 }

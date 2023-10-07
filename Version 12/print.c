@@ -25,7 +25,7 @@ void	ft_print(t_stack **stack_a, t_stack **stack_b)
 	while (temp && (temp != *stack_a || trigger == 1))
 	{
 		trigger = 0;
-		printf("%d\t[%d]\t[%d]\t|[%d]\t[%d]\t[%d]|\t|[%d]\t[%d]\t[%d]|\t[%d]\n", temp->value, temp->index, temp->pos, temp->ra, temp->rb, temp->rr, temp->rra, temp->rrb, temp->rrr, temp->total);
+		printf("%ld\t[%d]\t[%d]\t|[%d]\t[%d]\t[%d]|\t|[%d]\t[%d]\t[%d]|\t[%d]\n", temp->value, temp->index, temp->pos, temp->ra, temp->rb, temp->rr, temp->rra, temp->rrb, temp->rrr, temp->total);
 		temp = temp->next;
 	}
 	printf("\n");
@@ -36,7 +36,7 @@ void	ft_print(t_stack **stack_a, t_stack **stack_b)
 	while (temp && (temp != *stack_b || trigger == 1))
 	{
 		trigger = 0;
-		printf("%d\t[%d]\t[%d]\t|[%d]\t[%d]\t[%d]|\t|[%d]\t[%d]\t[%d]|\t[%d]\n", temp->value, temp->index, temp->pos, temp->ra, temp->rb, temp->rr, temp->rra, temp->rrb, temp->rrr, temp->total);
+		printf("%ld\t[%d]\t[%d]\t|[%d]\t[%d]\t[%d]|\t|[%d]\t[%d]\t[%d]|\t[%d]\n", temp->value, temp->index, temp->pos, temp->ra, temp->rb, temp->rr, temp->rra, temp->rrb, temp->rrr, temp->total);
 		temp = temp->next;
 	}
 	printf("========================================\n");
